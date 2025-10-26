@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - D-NAture</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #98deeb 0%, #cce9ed 25%, #e8eef0 50%, #f0f0f0 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Entrance Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .container {
+            max-width: 480px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+
+        .header {
+            margin-bottom: 30px;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: #4a4a4a;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            animation: fadeInUp 0.6s ease-out both;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.15s; }
+        .form-group:nth-child(3) { animation-delay: 0.2s; }
+        .form-group:nth-child(4) { animation-delay: 0.25s; }
+        .form-group:nth-child(5) { animation-delay: 0.3s; }
+        .form-group:nth-child(6) { animation-delay: 0.35s; }
+        .form-group:nth-child(7) { animation-delay: 0.4s; }
+        .form-group:nth-child(8) { animation-delay: 0.45s; }
+
+        .form-row .form-group {
+            animation-delay: 0.1s;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px 20px;
+            background: #effaff;
+            border: 1px solid #e0f4ff;
+            border-radius: 12px;
+            font-size: 15px;
+            color: #333;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            outline: none;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-2px);
+            }
+        }
+
+        @keyframes wave {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .form-control:focus {
+            border-color: #00bcff;
+            box-shadow: 0 0 0 3px rgba(0, 188, 255, 0.1), 0 4px 12px rgba(0, 188, 255, 0.15);
+            background: linear-gradient(90deg, #effaff 0%, #e0f7ff 25%, #d4f3ff 50%, #e0f7ff 75%, #effaff 100%);
+            background-size: 200% 100%;
+            animation: wave 2s ease-in-out infinite, float 3s ease-in-out infinite;
+            transform: translateY(-1px);
+        }
+
+        .form-control::placeholder {
+            color: #999;
+        }
+
+        select.form-control {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            padding-right: 40px;
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #00bcff;
+            font-size: 16px;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 25px 0;
+            animation: fadeInUp 0.6s ease-out 0.5s both;
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            cursor: pointer;
+            accent-color: #00bcff;
+        }
+
+        .checkbox-wrapper label {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+            cursor: pointer;
+        }
+
+        .checkbox-wrapper label a {
+            color: #00bcff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .checkbox-wrapper label a:hover {
+            text-decoration: underline;
+        }
+
+        .register-btn {
+            width: 100%;
+            padding: 18px 50px;
+            background: linear-gradient(135deg, #04789D 0%, #C8E6C9 100%);
+            color: #fff;
+            font-size: 20px;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(4, 120, 157, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            animation: fadeInUp 0.6s ease-out 0.6s both;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(4, 120, 157, 0.4);
+        }
+
+        .register-btn:active {
+            transform: translateY(0);
+        }
+
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Hello there 👋</h1>
+            <p>Please enter your information to create your account and get started</p>
+        </div>
+
+        <form id="registerForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" class="form-control" placeholder="Enter first name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="otherNames">Other Names</label>
+                    <input type="text" id="otherNames" class="form-control" placeholder="Enter other names" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <div class="input-wrapper">
+                    <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                    <i class="fas fa-envelope input-icon"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="primaryPhone">Primary Phone Number</label>
+                <div class="input-wrapper">
+                    <input type="tel" id="primaryPhone" class="form-control" placeholder="Main contact line" required>
+                    <i class="fas fa-phone input-icon"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="whatsappNumber">WhatsApp/Telegram Number</label>
+                <div class="input-wrapper">
+                    <input type="tel" id="whatsappNumber" class="form-control" placeholder="If different from primary">
+                    <i class="fab fa-whatsapp input-icon"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Residential Address</label>
+                <input type="text" id="address" class="form-control" placeholder="Street, City, State, Country" required>
+            </div>
+
+            <div class="form-group">
+                <label for="occupation">Occupation/Profession</label>
+                <select id="occupation" class="form-control" required>
+                    <option value="">Select occupation</option>
+                    <option value="student">Student</option>
+                    <option value="civil">Civil Worker</option>
+                    <option value="private">Private Worker</option>
+                    <option value="entrepreneur">Entrepreneur</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="otherOccupationGroup" style="display: none;">
+                <label for="otherOccupation">Please Specify</label>
+                <input type="text" id="otherOccupation" class="form-control" placeholder="Enter your occupation">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="text" id="age" class="form-control" placeholder="Auto-calculated" readonly>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select id="gender" class="form-control" required>
+                    <option value="">Select gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+
+            <div class="checkbox-wrapper">
+                <input type="checkbox" id="terms" required>
+                <label for="terms">
+                    I agree to D-NAture's <a href="#">User Agreement</a>, <a href="#">Terms</a>, & <a href="#">Privacy Policy</a>
+                </label>
+            </div>
+
+            <button type="submit" class="register-btn">Register</button>
+        </form>
+    </div>
+
+    <script>
+        // Show/hide other occupation field
+        document.getElementById('occupation').addEventListener('change', function() {
+            const otherGroup = document.getElementById('otherOccupationGroup');
+            if (this.value === 'other') {
+                otherGroup.style.display = 'block';
+                document.getElementById('otherOccupation').required = true;
+            } else {
+                otherGroup.style.display = 'none';
+                document.getElementById('otherOccupation').required = false;
+            }
+        });
+
+        // Auto-calculate age from date of birth
+        document.getElementById('dob').addEventListener('change', function() {
+            const dob = new Date(this.value);
+            const today = new Date();
+            let age = today.getFullYear() - dob.getFullYear();
+            const monthDiff = today.getMonth() - dob.getMonth();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+                age--;
+            }
+            
+            document.getElementById('age').value = age + ' years';
+        });
+
+        // Handle form submission
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                otherNames: document.getElementById('otherNames').value,
+                email: document.getElementById('email').value,
+                primaryPhone: document.getElementById('primaryPhone').value,
+                whatsappNumber: document.getElementById('whatsappNumber').value,
+                address: document.getElementById('address').value,
+                occupation: document.getElementById('occupation').value,
+                otherOccupation: document.getElementById('otherOccupation').value,
+                dob: document.getElementById('dob').value,
+                age: document.getElementById('age').value,
+                gender: document.getElementById('gender').value
+            };
+            
+            console.log('Registration Data:', formData);
+            
+            // Here you would typically send the data to your server
+            alert('Registration successful! Welcome to D-NAture 🌱');
+            
+            // Redirect to landing page or dashboard
+            window.location.href = 'landing.html';
+        });
+    </script>
+</body>
+</html>

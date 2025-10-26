@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D-NAture Video Experience</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Entrance Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Main Container */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Video Section */
+        .video-section {
+            height: 60vh;
+            background: #000428;
+            background: linear-gradient(135deg, #000428 0%, #004e92 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+            animation: scaleIn 0.8s ease-out;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        /* Video Controls Container */
+        .video-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+            padding: 60px 20px 10px 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-section:hover .video-controls {
+            opacity: 1;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #ff0000;
+            width: 0%;
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background: #ff0000;
+            border-radius: 50%;
+        }
+
+        /* Controls Bottom Row */
+        .controls-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .controls-left,
+        .controls-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .play-pause-btn {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        .timestamp {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        /* Volume Control */
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .volume-slider {
+            width: 0;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .volume-container:hover .volume-slider {
+            width: 60px;
+            opacity: 1;
+        }
+
+        input[type="range"] {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            cursor: pointer;
+            border-radius: 50%;
+            border: none;
+        }
+
+        /* Click Zones for Double Click */
+        .click-zone {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 33.33%;
+            cursor: pointer;
+        }
+
+        .click-zone-left {
+            left: 0;
+        }
+
+        .click-zone-center {
+            left: 33.33%;
+        }
+
+        .click-zone-right {
+            right: 0;
+        }
+
+        /* Seek Indicator */
+        .seek-indicator {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 48px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .seek-indicator.show {
+            opacity: 1;
+        }
+
+        .seek-indicator-left {
+            left: 25%;
+        }
+
+        .seek-indicator-right {
+            right: 25%;
+        }
+
+        /* Transcript Section */
+        .transcript-section {
+            flex: 1;
+            overflow-y: auto;
+            padding: 50px 60px;
+            background: #ffffff;
+            color: #1a1a1a;
+            scroll-behavior: smooth;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+
+        .transcript-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .transcript-header h2 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .expand-btn {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: #1a1a1a;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .expand-btn:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .transcript-content {
+            font-size: 17px;
+            line-height: 1.9;
+            max-width: 1000px;
+            margin: 0 auto;
+            color: #2d2d2d;
+            text-align: justify;
+            font-weight: 400;
+        }
+
+        /* Get Started Button */
+        .get-started-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 30vh;
+            gap: 20px;
+        }
+
+        .get-started-btn {
+            background: linear-gradient(135deg, #04789D 0%, #C8E6C9 100%);
+            color: #fff;
+            font-size: 20px;
+            font-weight: 600;
+            padding: 18px 50px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(4, 120, 157, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .get-started-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(4, 120, 157, 0.4);
+        }
+
+        .get-started-btn:active {
+            transform: translateY(0);
+        }
+
+        .end-message {
+            font-size: 24px;
+            font-weight: 500;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+
+        .transcript-word {
+            display: inline;
+            padding: 3px 2px;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .transcript-word:hover {
+            background: rgba(0, 78, 146, 0.1);
+        }
+
+        .transcript-word.active {
+            background: rgba(0, 78, 146, 0.15);
+            color: #004e92;
+            font-weight: 600;
+        }
+
+        .transcript-word.passed {
+            opacity: 0.7;
+        }
+
+        /* Scrollbar Styling */
+        .transcript-section::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .transcript-section::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .transcript-section::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+
+        .transcript-section::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+
+            .video-section {
+                height: 50vh;
+            }
+
+            .transcript-section {
+                flex: 1;
+                padding: 30px 25px;
+            }
+
+            .transcript-content {
+                font-size: 16px;
+            }
+
+            .video-controls {
+                gap: 15px;
+                padding: 10px 20px;
+            }
+
+            .control-btn {
+                font-size: 20px;
+            }
+
+            .play-pause {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Video Section -->
+        <div class="video-section">
+            <video id="mainVideo">
+                <source src="/videos/Oct_19__1621_24s_202510192038_saxlr.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+
+            <!-- Click Zones -->
+            <div class="click-zone click-zone-left" id="clickZoneLeft"></div>
+            <div class="click-zone click-zone-center" id="clickZoneCenter"></div>
+            <div class="click-zone click-zone-right" id="clickZoneRight"></div>
+
+            <!-- Seek Indicators -->
+            <div class="seek-indicator seek-indicator-left" id="seekIndicatorLeft">
+                <i class="fas fa-undo"></i> 1s
+            </div>
+            <div class="seek-indicator seek-indicator-right" id="seekIndicatorRight">
+                1s <i class="fas fa-redo"></i>
+            </div>
+
+            <!-- Video Controls -->
+            <div class="video-controls" id="videoControls">
+                <!-- Progress Bar -->
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+
+                <!-- Controls Bottom Row -->
+                <div class="controls-bottom">
+                    <div class="controls-left">
+                        <button class="control-btn play-pause-btn" id="playPauseBtn">
+                            <i class="fas fa-play" id="playPauseIcon"></i>
+                        </button>
+                        <div class="volume-container">
+                            <button class="control-btn" id="volumeBtn">
+                                <i class="fas fa-volume-up" id="volumeIcon"></i>
+                            </button>
+                            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="100">
+                        </div>
+                        <span class="timestamp" id="timestamp">0:00 / 0:00</span>
+                    </div>
+                    <div class="controls-right">
+                        <button class="control-btn" id="settingsBtn">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transcript Section -->
+        <div class="transcript-section" id="transcriptSection">
+            <div class="transcript-content" id="transcriptContent">
+                <!-- Transcript will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('mainVideo');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const playPauseIcon = document.getElementById('playPauseIcon');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+        const timestamp = document.getElementById('timestamp');
+        const volumeBtn = document.getElementById('volumeBtn');
+        const volumeIcon = document.getElementById('volumeIcon');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const clickZoneLeft = document.getElementById('clickZoneLeft');
+        const clickZoneCenter = document.getElementById('clickZoneCenter');
+        const clickZoneRight = document.getElementById('clickZoneRight');
+        const seekIndicatorLeft = document.getElementById('seekIndicatorLeft');
+        const seekIndicatorRight = document.getElementById('seekIndicatorRight');
+        const transcriptContent = document.getElementById('transcriptContent');
+        const transcriptSection = document.getElementById('transcriptSection');
+
+        // Accurate transcript data generated by Whisper AI with word-level timestamps
+        const transcriptData = [
+            { start: 0.86, end: 1.5, text: "In" },
+            { start: 1.5, end: 1.62, text: "the" },
+            { start: 1.62, end: 1.86, text: "heart" },
+            { start: 1.86, end: 2.1, text: "of" },
+            { start: 2.1, end: 2.54, text: "Africa," },
+            { start: 3.04, end: 3.14, text: "a" },
+            { start: 3.14, end: 3.46, text: "new" },
+            { start: 3.46, end: 3.82, text: "dawn" },
+            { start: 3.82, end: 4.32, text: "rises," },
+            { start: 4.84, end: 5.06, text: "where" },
+            { start: 5.06, end: 5.6, text: "agriculture" },
+            { start: 5.6, end: 6.02, text: "meets" },
+            { start: 6.02, end: 6.6, text: "technology" },
+            { start: 6.6, end: 6.86, text: "and" },
+            { start: 6.86, end: 7.28, text: "finance." },
+            { start: 8.22, end: 8.86, text: "Have" },
+            { start: 8.86, end: 9.0, text: "you" },
+            { start: 9.0, end: 9.16, text: "heard" },
+            { start: 9.16, end: 9.4, text: "about" },
+            { start: 9.4, end: 10.0, text: "D-NATure?" },
+            { start: 10.8, end: 11.02, text: "They're" },
+            { start: 11.02, end: 11.44, text: "combining" },
+            { start: 11.44, end: 12.22, text: "agriculture," },
+            { start: 12.54, end: 12.82, text: "finance" },
+            { start: 12.82, end: 13.1, text: "and" },
+            { start: 13.1, end: 13.54, text: "technology" },
+            { start: 13.54, end: 13.9, text: "into" },
+            { start: 13.9, end: 14.26, text: "something" },
+            { start: 14.26, end: 14.98, text: "revolutionary." },
+            { start: 15.5, end: 15.7, text: "Yes." },
+            { start: 16.52, end: 17.06, text: "Each" },
+            { start: 17.06, end: 17.28, text: "pack" },
+            { start: 17.28, end: 17.54, text: "here" },
+            { start: 17.54, end: 17.92, text: "represents" },
+            { start: 17.92, end: 18.2, text: "a" },
+            { start: 18.2, end: 18.48, text: "real" },
+            { start: 18.48, end: 18.76, text: "-life" },
+            { start: 18.76, end: 18.96, text: "farm" },
+            { start: 18.96, end: 19.28, text: "investment." },
+            { start: 19.9, end: 20.1, text: "From" },
+            { start: 20.1, end: 20.28, text: "just" },
+            { start: 20.28, end: 20.72, text: "20" },
+            { start: 20.72, end: 21.04, text: ",000" },
+            { start: 21.04, end: 21.42, text: "Naira," },
+            { start: 21.66, end: 22.0, text: "anyone" },
+            { start: 22.0, end: 22.22, text: "can" },
+            { start: 22.22, end: 22.46, text: "own" },
+            { start: 22.46, end: 22.58, text: "a" },
+            { start: 22.58, end: 22.78, text: "share" },
+            { start: 22.78, end: 22.92, text: "of" },
+            { start: 22.92, end: 23.08, text: "this" },
+            { start: 23.08, end: 23.3, text: "growth." },
+            { start: 23.66, end: 23.98, text: "Exactly." }
+        ];
+
+        // Generate transcript HTML
+        function generateTranscript() {
+            transcriptContent.innerHTML = transcriptData.map((item, index) => 
+                `<span class="transcript-word" data-index="${index}" data-start="${item.start}" data-end="${item.end}">${item.text} </span>`
+            ).join('');
+
+            // Add click handlers to transcript words
+            document.querySelectorAll('.transcript-word').forEach(word => {
+                word.addEventListener('click', () => {
+                    const startTime = parseFloat(word.dataset.start);
+                    video.currentTime = startTime;
+                    video.play();
+                });
+            });
+        }
+
+        // Update active word based on video time
+        function updateActiveWord() {
+            const currentTime = video.currentTime;
+            const words = document.querySelectorAll('.transcript-word');
+
+            words.forEach(word => {
+                const start = parseFloat(word.dataset.start);
+                const end = parseFloat(word.dataset.end);
+
+                word.classList.remove('active', 'passed');
+
+                if (currentTime >= start && currentTime < end) {
+                    word.classList.add('active');
+                    // Auto-scroll to active word within transcript section only
+                    const transcriptSection = document.getElementById('transcriptSection');
+                    const wordTop = word.offsetTop;
+                    const sectionHeight = transcriptSection.clientHeight;
+                    const scrollTarget = wordTop - (sectionHeight / 2) + (word.offsetHeight / 2);
+                    transcriptSection.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+                } else if (currentTime >= end) {
+                    word.classList.add('passed');
+                }
+            });
+        }
+
+        // Format time (seconds to MM:SS)
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Update progress bar and timestamp
+        function updateProgress() {
+            const percent = (video.currentTime / video.duration) * 100;
+            progressBar.style.width = percent + '%';
+            timestamp.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+        }
+
+        // Play/Pause toggle
+        function togglePlayPause() {
+            if (video.paused) {
+                video.play();
+                playPauseIcon.className = 'fas fa-pause';
+            } else {
+                video.pause();
+                playPauseIcon.className = 'fas fa-play';
+            }
+        }
+
+        // Show seek indicator
+        function showSeekIndicator(element) {
+            element.classList.add('show');
+            setTimeout(() => {
+                element.classList.remove('show');
+            }, 500);
+        }
+
+        // Play/Pause button click
+        playPauseBtn.addEventListener('click', togglePlayPause);
+
+        // Center zone single click - play/pause
+        clickZoneCenter.addEventListener('click', togglePlayPause);
+
+        // Left zone double click - rewind 1 second
+        clickZoneLeft.addEventListener('dblclick', () => {
+            video.currentTime = Math.max(0, video.currentTime - 1);
+            showSeekIndicator(seekIndicatorLeft);
+        });
+
+        // Right zone double click - forward 1 second
+        clickZoneRight.addEventListener('dblclick', () => {
+            video.currentTime = Math.min(video.duration, video.currentTime + 1);
+            showSeekIndicator(seekIndicatorRight);
+        });
+
+        // Progress bar click to seek
+        progressContainer.addEventListener('click', (e) => {
+            const rect = progressContainer.getBoundingClientRect();
+            const percent = (e.clientX - rect.left) / rect.width;
+            video.currentTime = percent * video.duration;
+        });
+
+        // Volume control
+        volumeSlider.addEventListener('input', (e) => {
+            video.volume = e.target.value / 100;
+            updateVolumeIcon();
+        });
+
+        volumeBtn.addEventListener('click', () => {
+            if (video.volume > 0) {
+                video.volume = 0;
+                volumeSlider.value = 0;
+            } else {
+                video.volume = 1;
+                volumeSlider.value = 100;
+            }
+            updateVolumeIcon();
+        });
+
+        function updateVolumeIcon() {
+            if (video.volume === 0) {
+                volumeIcon.className = 'fas fa-volume-mute';
+            } else if (video.volume < 0.5) {
+                volumeIcon.className = 'fas fa-volume-down';
+            } else {
+                volumeIcon.className = 'fas fa-volume-up';
+            }
+        }
+
+        // Update progress and transcript highlighting
+        video.addEventListener('timeupdate', () => {
+            updateProgress();
+            updateActiveWord();
+        });
+
+        // Auto-play video when loaded
+        video.addEventListener('loadedmetadata', () => {
+            updateProgress();
+            video.play();
+            playPauseIcon.className = 'fas fa-pause';
+        });
+
+        // Handle video end
+        video.addEventListener('ended', () => {
+            playPauseIcon.className = 'fas fa-play';
+            showGetStartedButton();
+        });
+
+        // Show GET STARTED button when video ends
+        function showGetStartedButton() {
+            transcriptContent.innerHTML = `
+                <div class="get-started-container">
+                    <h2 class="end-message">Ready to transform agriculture?</h2>
+                    <button class="get-started-btn" onclick="window.location.href='register.html'">
+                        GET STARTED
+                    </button>
+                </div>
+            `;
+        }
+
+        // Initialize transcript
+        generateTranscript();
+    </script>
+</body>
+</html>

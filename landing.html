@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D-NAture - Where Nature Meets Innovation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
+            overflow-x: hidden;
+            background: #000;
+        }
+
+        /* Video Background */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.6);
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0.3) 0%,
+                rgba(0, 0, 0, 0.5) 100%
+            );
+            z-index: 0;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 500;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .header-icons i {
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .header-icons i:hover {
+            opacity: 0.7;
+        }
+
+        /* Main Content */
+        .main-content {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            z-index: 1;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        /* Update Banner */
+        .update-banner {
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 60px;
+            opacity: 0.9;
+            animation: fadeInDown 1s ease;
+        }
+
+        /* Hero Title */
+        .hero-title {
+            font-size: clamp(80px, 15vw, 180px);
+            font-weight: 500;
+            color: #fff;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .hero-title span {
+            display: inline-block;
+            transition: filter 0.6s ease-out;
+        }
+
+        /* Subtitle */
+        .subtitle {
+            font-size: clamp(18px, 3vw, 24px);
+            color: #fff;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 60px;
+            line-height: 1.5;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            padding: 16px 40px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.9s both;
+        }
+
+        .cta-button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            position: fixed;
+            bottom: 30px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            z-index: 100;
+        }
+
+        .footer-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+        }
+
+        .footer-text a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            transition: border-color 0.3s;
+        }
+
+        .footer-text a:hover {
+            border-bottom-color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 0.9;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .header-icons i {
+                font-size: 20px;
+            }
+
+            .update-banner {
+                font-size: 12px;
+                margin-bottom: 40px;
+            }
+
+            .hero-title {
+                margin-bottom: 20px;
+            }
+
+            .subtitle {
+                margin-bottom: 40px;
+            }
+
+            .cta-button {
+                padding: 14px 32px;
+                font-size: 14px;
+            }
+
+            footer {
+                bottom: 20px;
+            }
+
+            .video-background video {
+                height: 100vh;
+                min-height: 100vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Video Background -->
+    <div class="video-background">
+        <video autoplay muted loop playsinline>
+            <source src="combined_video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">D-NAture</div>
+        <div class="header-icons">
+            <i class="fab fa-discord"></i>
+            <i class="fas fa-ellipsis-v"></i>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="update-banner">
+            <strong>Update</strong> - D-NATure has come to stay. Join the wave
+        </div>
+
+        <h1 class="hero-title" id="heroTitle">D-NAture</h1>
+
+        <p class="subtitle">
+            Where the next wave of nature and innovation happens with D-NAture
+        </p>
+
+        <a href="video-player.html" class="cta-button">Explore with D-NAture</a>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p class="footer-text">
+            Discover <a href="#">D-NAture Solutions</a>. See FAQ.
+        </p>
+    </footer>
+
+    <script>
+        // Split hero title into individual characters with traveling blur effect
+        window.addEventListener('DOMContentLoaded', () => {
+            const heroTitle = document.getElementById('heroTitle');
+            const text = heroTitle.textContent;
+            heroTitle.innerHTML = '';
+            
+            // Split text into characters and wrap each in a span
+            const spans = [];
+            text.split('').forEach((char, index) => {
+                const span = document.createElement('span');
+                span.textContent = char;
+                // Preserve spaces
+                if (char === ' ') {
+                    span.style.width = '0.3em';
+                }
+                heroTitle.appendChild(span);
+                spans.push(span);
+            });
+
+            // Traveling blur effect with pause
+            let blurPosition = 0;
+            let isAnimating = false;
+            let isPaused = false;
+            const blurRadius = 2; // How many characters on each side get affected
+            const blurIntensity = 12; // Max blur in pixels
+            const pauseDuration = 5000; // 5 seconds pause
+            const animationDuration = 3000; // 3 seconds for blur to travel
+            
+            function updateBlur() {
+                if (isPaused) return;
+                
+                spans.forEach((span, index) => {
+                    // Calculate distance from blur center
+                    const distance = Math.abs(index - blurPosition);
+                    
+                    if (distance <= blurRadius) {
+                        // Apply blur based on distance (closer = more blur)
+                        const blurAmount = blurIntensity * (1 - distance / (blurRadius + 1));
+                        span.style.filter = `blur(${blurAmount}px)`;
+                    } else {
+                        // No blur
+                        span.style.filter = 'blur(0px)';
+                    }
+                });
+                
+                // Move blur position
+                blurPosition += 0.5;
+                if (blurPosition > spans.length + blurRadius) {
+                    // Reset and pause
+                    blurPosition = -blurRadius;
+                    isPaused = true;
+                    
+                    // Clear all blur
+                    spans.forEach(span => span.style.filter = 'blur(0px)');
+                    
+                    // Resume after pause
+                    setTimeout(() => {
+                        isPaused = false;
+                    }, pauseDuration);
+                }
+            }
+            
+            // Start the blur animation after page loads
+            setTimeout(() => {
+                setInterval(updateBlur, 100); // Update every 100ms for smooth movement
+            }, 1500); // Wait 1.5s for initial fade-in
+        });
+
+        // Smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Video autoplay fallback
+        window.addEventListener('load', () => {
+            const video = document.querySelector('.video-background video');
+            video.play().catch(error => {
+                console.log('Autoplay prevented:', error);
+            });
+        });
+
+        // Add click interaction for icons
+        document.querySelectorAll('.header-icons i').forEach(icon => {
+            icon.addEventListener('click', () => {
+                console.log('Icon clicked:', icon.className);
+            });
+        });
+    </script>
+</body>
+</html>
