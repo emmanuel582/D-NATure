@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Summary - D-NATure</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #98deeb 0%, #cce9ed 25%, #e8eef0 50%, #f0f0f0 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+
+        .header .emoji {
+            font-size: 32px;
+            margin-right: 10px;
+        }
+
+        .summary-pack-display {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: linear-gradient(135deg, #04789D 0%, #C8E6C9 100%);
+            padding: 25px;
+            border-radius: 20px;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .summary-pack-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 15px;
+            object-fit: cover;
+        }
+
+        .summary-pack-info h3 {
+            margin: 0 0 8px 0;
+            font-size: 22px;
+        }
+
+        .summary-pack-info p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 16px;
+        }
+
+        .summary-section {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-section:last-child {
+            border-bottom: none;
+        }
+
+        .summary-section h4 {
+            color: #04789D;
+            margin-bottom: 12px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .summary-section p {
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .summary-note {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid #04789D;
+            font-style: italic;
+            color: #666;
+            text-align: center;
+            margin: 25px 0;
+            font-size: 16px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #04789D 0%, #C8E6C9 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(4, 120, 157, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+                margin: 10px;
+            }
+
+            .summary-pack-display {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .summary-pack-image {
+                width: 80px;
+                height: 80px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><span class="emoji">📋</span>Investment Summary</h1>
+        </div>
+
+        <div class="summary-pack-display">
+            <img id="summaryPackImage" src="" alt="Selected Pack" class="summary-pack-image">
+            <div class="summary-pack-info">
+                <h3 id="summaryPackName"></h3>
+                <p id="summaryPackContent"></p>
+            </div>
+        </div>
+
+        <div class="summary-section">
+            <h4>1. Investment Pack Selection</h4>
+            <p>You selected the <strong id="summaryPackNameText"></strong>, which means you are subscribing to the rearing of <strong id="summaryAnimals"></strong> under D-NATure's management system.</p>
+        </div>
+
+        <div class="summary-section">
+            <h4>2. Subscription Cost Breakdown</h4>
+            <p>Your total subscription amount is <strong id="summaryTotalAmount"></strong>.</p>
+            <p>An initiation fee of 20% (<strong id="summaryInitiationFee"></strong>) will be paid at the next registration step to cover part of the cost of acquiring and caring for your animals.</p>
+            <p>The remaining <strong id="summaryBalanceAmount"></strong> will be distributed evenly over your chosen subscription duration.</p>
+        </div>
+
+        <div class="summary-section">
+            <h4>3. Subscription Duration</h4>
+            <p>You selected a <strong id="summarySubscriptionMonths"></strong>-month subscription duration.</p>
+            <p>This means you will make <strong id="summaryMonthlyPayment"></strong> monthly payments for the next <strong id="summarySubscriptionMonthsText"></strong> months.</p>
+        </div>
+
+        <div class="summary-section">
+            <h4>4. Payout Duration and Structure</h4>
+            <p>Based on your subscription choice, your payout duration will be <strong id="summaryPayoutMonths"></strong> months.</p>
+            <p>You will receive all your payout within <strong id="summaryPayoutMonthsText"></strong> months.</p>
+        </div>
+
+        <div class="summary-section">
+            <h4>5. Cycle Summary</h4>
+            <p>Your full investment cycle runs for 12 months in total—a combination of your <strong id="summaryCycleSubscription"></strong>-month payment period and <strong id="summaryCyclePayout"></strong>-month payout period.</p>
+            <p>At the end of this cycle, you will have received a total payout of <strong id="summaryTotalPayout"></strong>, completing your D-NATure investment round.</p>
+        </div>
+
+        <div class="summary-note">
+            "Please review this summary carefully to ensure all details reflect your intended choices before submitting"
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="proceedToNext()">I Agree, Proceed</button>
+            <button class="btn btn-secondary" onclick="goBack()">Go Back</button>
+        </div>
+    </div>
+
+    <script>
+        // Load and display summary data
+        window.onload = function() {
+            // Check if user has selected a package and duration
+            const packageId = localStorage.getItem('selectedPackage');
+            const subscriptionMonths = localStorage.getItem('subscriptionDuration');
+            const payoutMonths = localStorage.getItem('payoutDuration');
+
+            if (!packageId) {
+                alert('Please select a package first');
+                window.location.href = 'packages.html';
+                return;
+            }
+
+            if (!subscriptionMonths || !payoutMonths) {
+                alert('Please select subscription duration first');
+                window.location.href = 'packages.html';
+                return;
+            }
+
+            populateSummary();
+        };
+
+        function populateSummary() {
+            const packageId = localStorage.getItem('selectedPackage');
+            const subscriptionMonths = localStorage.getItem('subscriptionDuration');
+            const payoutMonths = localStorage.getItem('payoutDuration');
+
+            // Package data
+            const packages = {
+                1: { name: "Timid Investor Pack", content: "🐔 1 Fowl", amount: 20000, payout: 26000, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152215/Curcan_sus4vk.jpg", fowls: 1, turkeys: 0 },
+                2: { name: "New Taker Pack", content: "🐔 2 Fowls", amount: 40000, payout: 52800, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152277/%D0%AD%D1%82%D0%B8_%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8_%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE_%D0%B7%D0%B0%D0%B1%D1%80%D0%B0%D1%82%D1%8C_%D0%B2_%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B5%D0%BC_%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5_%D0%B2_%D0%A2%D0%93_%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%B5_fxcnrr.jpg", fowls: 2, turkeys: 0 },
+                3: { name: "Student Survival Pack", content: "🦃 1 Turkey", amount: 50000, payout: 66500, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152215/Curcan_sus4vk.jpg", fowls: 0, turkeys: 1 },
+                4: { name: "Bold Step Pack", content: "🐔 3 Fowls", amount: 60000, payout: 80400, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152277/%D0%AD%D1%82%D0%B8_%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8_%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE_%D0%B7%D0%B0%D0%B1%D1%80%D0%B0%D1%82%D1%8C_%D0%B2_%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B5%D0%BC_%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5_%D0%B2_%D0%A2%D0%93_%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%B5_fxcnrr.jpg", fowls: 3, turkeys: 0 },
+                5: { name: "Sharp Investor Pack", content: "🦃 1 Turkey + 🐔 1 Fowl", amount: 70000, payout: 94500, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152215/Curcan_sus4vk.jpg", fowls: 1, turkeys: 1 },
+                6: { name: "Investor's Confidence Pack", content: "🐔 4 Fowls", amount: 80000, payout: 108800, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152277/%D0%AD%D1%82%D0%B8_%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8_%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE_%D0%B7%D0%B0%D0%B1%D1%80%D0%B0%D1%82%D1%8C_%D0%B2_%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B5%D0%BC_%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5_%D0%B2_%D0%A2%D0%93_%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%B5_fxcnrr.jpg", fowls: 4, turkeys: 0 },
+                7: { name: "Wealth Ladder Pack", content: "🦃 1 Turkey + 🐔 2 Fowls", amount: 90000, payout: 123300, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152215/Curcan_sus4vk.jpg", fowls: 2, turkeys: 1 },
+                8: { name: "Visionary Stake Pack", content: "🦃 2 Turkeys", amount: 100000, payout: 138000, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152277/%D0%AD%D1%82%D0%B8_%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8_%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE_%D0%B7%D0%B0%D0%B1%D1%80%D0%B0%D1%82%D1%8C_%D0%B2_%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B5%D0%BC_%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5_%D0%B2_%D0%A2%D0%93_%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%B5_fxcnrr.jpg", fowls: 0, turkeys: 2 },
+                9: { name: "Impact Stake Pack", content: "🦃 2 Turkeys + 🐔 1 Fowl", amount: 120000, payout: 166800, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152215/Curcan_sus4vk.jpg", fowls: 1, turkeys: 2 },
+                10: { name: "Premium Leap Pack", content: "🦃 3 Turkeys", amount: 150000, payout: 210000, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152277/%D0%AD%D1%82%D0%B8_%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8_%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE_%D0%B7%D0%B0%D0%B1%D1%80%D0%B0%D1%82%D1%8C_%D0%B2_%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B5%D0%BC_%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5_%D0%B2_%D0%A2%D0%93_%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%B5_fxcnrr.jpg", fowls: 0, turkeys: 3 },
+                11: { name: "Jumbo Loaf Pack", content: "🦃 4 Turkeys", amount: 200000, payout: 280000, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152215/Curcan_sus4vk.jpg", fowls: 0, turkeys: 4 },
+                12: { name: "Lion's Share Pack", content: "🦃 5 Turkeys + 🐔 3 Fowls", amount: 300000, payout: 420000, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152277/%D0%AD%D1%82%D0%B8_%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8_%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE_%D0%B7%D0%B0%D0%B1%D1%80%D0%B0%D1%82%D1%8C_%D0%B2_%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B5%D0%BC_%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5_%D0%B2_%D0%A2%D0%93_%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%B5_fxcnrr.jpg", fowls: 3, turkeys: 5 }
+            };
+
+            const pack = packages[packageId];
+            if (!pack) return;
+
+            const initiationFee = Math.round(pack.amount * 0.2);
+            const balanceAmount = pack.amount - initiationFee;
+            const monthlyPayment = Math.round(balanceAmount / subscriptionMonths);
+
+            // Animals description
+            let animalsText = "";
+            if (pack.fowls > 0 && pack.turkeys > 0) {
+                animalsText = `${pack.fowls} Fowl(s) and ${pack.turkeys} Turkey(s)`;
+            } else if (pack.fowls > 0) {
+                animalsText = `${pack.fowls} Fowl(s)`;
+            } else {
+                animalsText = `${pack.turkeys} Turkey(s)`;
+            }
+
+            // Populate summary
+            document.getElementById('summaryPackImage').src = pack.image;
+            document.getElementById('summaryPackName').textContent = pack.name;
+            document.getElementById('summaryPackContent').textContent = pack.content;
+            document.getElementById('summaryPackNameText').textContent = pack.name;
+            document.getElementById('summaryAnimals').textContent = animalsText;
+            document.getElementById('summaryTotalAmount').textContent = `₦${pack.amount.toLocaleString()}`;
+            document.getElementById('summaryInitiationFee').textContent = `₦${initiationFee.toLocaleString()}`;
+            document.getElementById('summaryBalanceAmount').textContent = `₦${balanceAmount.toLocaleString()}`;
+            document.getElementById('summarySubscriptionMonths').textContent = subscriptionMonths;
+            document.getElementById('summarySubscriptionMonthsText').textContent = subscriptionMonths;
+            document.getElementById('summaryMonthlyPayment').textContent = `₦${monthlyPayment.toLocaleString()}`;
+            document.getElementById('summaryPayoutMonths').textContent = payoutMonths;
+            document.getElementById('summaryPayoutMonthsText').textContent = payoutMonths;
+            document.getElementById('summaryCycleSubscription').textContent = subscriptionMonths;
+            document.getElementById('summaryCyclePayout').textContent = payoutMonths;
+            document.getElementById('summaryTotalPayout').textContent = `₦${pack.payout.toLocaleString()}`;
+        }
+
+        function proceedToNext() {
+            window.location.href = 'confirmation.html';
+        }
+
+        function goBack() {
+            window.location.href = 'packages.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Complete - D-NATure</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #98deeb 0%, #cce9ed 25%, #e8eef0 50%, #f0f0f0 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 0.6s ease-out;
+            text-align: center;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-icon {
+            font-size: 80px;
+            color: #04789D;
+            margin-bottom: 20px;
+            animation: bounce 1s ease-out;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+
+        .content {
+            text-align: left;
+            margin: 30px 0;
+        }
+
+        .content p {
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .community-section {
+            background: linear-gradient(135deg, #04789D 0%, #C8E6C9 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 25px 0;
+        }
+
+        .community-section h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .community-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .community-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .community-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .community-link i {
+            font-size: 20px;
+            width: 25px;
+        }
+
+        .contact-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 25px 0;
+        }
+
+        .contact-section h4 {
+            color: #04789D;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .contact-number {
+            font-size: 18px;
+            font-weight: 600;
+            color: #04789D;
+            margin: 10px 0;
+        }
+
+        .payment-section {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 25px 0;
+        }
+
+        .payment-section h4 {
+            color: #856404;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .payment-details {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #04789D;
+        }
+
+        .payment-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .payment-label {
+            font-weight: 500;
+            color: #666;
+        }
+
+        .payment-value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .note {
+            background: #e8f4fd;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #04789D;
+            margin: 20px 0;
+            font-style: italic;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+                margin: 10px;
+            }
+
+            .success-icon {
+                font-size: 60px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .payment-row {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        
+        <div class="header">
+            <h1>🎉 Registration Complete!</h1>
+        </div>
+
+        <div class="content">
+            <p><strong>Thank you for completing your registration details.</strong></p>
+            <p>If you haven't yet joined our official communities, please do so now to stay connected and receive updates directly:</p>
+
+            <div class="community-section">
+                <h3>Join Our Official Communities</h3>
+                <div class="community-links">
+                    <a href="https://t.me/dnatureaft" class="community-link" target="_blank">
+                        <i class="fab fa-telegram"></i>
+                        <span>Official Telegram Channel</span>
+                    </a>
+                    <a href="https://whatsapp.com/channel/0029Vb4t3SMJkK71VadchL46" class="community-link" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>Official WhatsApp Channel</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="contact-section">
+                <h4><i class="fas fa-phone"></i> Official WhatsApp Contact</h4>
+                <div class="contact-number">07057718899</div>
+                <p>Save this number as <strong>"D-NATure"</strong> on your phone and await a message from our team as we process your registration.</p>
+            </div>
+
+            <p>You will soon be guided to complete the remaining steps of your onboarding process.</p>
+            
+            <p>At that stage, you will be required to pay your initiation fee (20% of your total subscription amount) to confirm your registration and activate your pack.</p>
+
+            <div class="payment-section">
+                <h4><i class="fas fa-university"></i> Official Payment Details</h4>
+                <div class="payment-details">
+                    <div class="payment-row">
+                        <span class="payment-label">Bank Name:</span>
+                        <span class="payment-value">To be provided</span>
+                    </div>
+                    <div class="payment-row">
+                        <span class="payment-label">Account Name:</span>
+                        <span class="payment-value">To be provided</span>
+                    </div>
+                    <div class="payment-row">
+                        <span class="payment-label">Account Number:</span>
+                        <span class="payment-value">To be provided</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="note">
+                <strong>Important:</strong> Our team will contact you with complete payment details and further instructions. Please ensure your phone is accessible and check your messages regularly.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user completed summary step
+        window.onload = function() {
+            const packageId = localStorage.getItem('selectedPackage');
+            const subscriptionMonths = localStorage.getItem('subscriptionDuration');
+            const payoutMonths = localStorage.getItem('payoutDuration');
+
+            if (!packageId || !subscriptionMonths || !payoutMonths) {
+                alert('Please complete package selection first');
+                window.location.href = 'packages.html';
+                return;
+            }
+        };
+
+        // Auto-copy contact number when clicked
+        document.querySelector('.contact-number').addEventListener('click', function() {
+            navigator.clipboard.writeText('07057718899').then(function() {
+                // Show temporary feedback
+                const original = this.textContent;
+                this.textContent = 'Copied!';
+                this.style.color = '#28a745';
+                
+                setTimeout(() => {
+                    this.textContent = original;
+                    this.style.color = '#04789D';
+                }, 2000);
+            }.bind(this));
+        });
+
+        // Add click-to-copy functionality
+        document.querySelector('.contact-number').style.cursor = 'pointer';
+        document.querySelector('.contact-number').title = 'Click to copy';
+    </script>
+</body>
+</html>

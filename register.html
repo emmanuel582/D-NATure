@@ -256,6 +256,131 @@
                 gap: 20px;
             }
         }
+
+        /* Popup Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: scale(0.7);
+            transition: transform 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .modal-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h2 {
+            color: #1a1a1a;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .modal-body {
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .modal-body p {
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #04789D 0%, #C8E6C9 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 20px 0;
+        }
+
+        .example-box h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .example-box p {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn-primary {
+            background: linear-gradient(135deg, #04789D 0%, #C8E6C9 100%);
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(4, 120, 157, 0.4);
+        }
+
+        .modal-btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .modal-btn-secondary:hover {
+            background: #e0e0e0;
+        }
     </style>
 </head>
 <body>
@@ -352,8 +477,34 @@
                 </label>
             </div>
 
-            <button type="submit" class="register-btn">Register</button>
+            <button type="button" class="register-btn" onclick="showModal()">Get Started</button>
         </form>
+    </div>
+
+    <!-- Popup Modal -->
+    <div class="modal-overlay" id="infoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🌱 Important Payment Information</h2>
+            </div>
+            <div class="modal-body">
+                <p><strong>For the Packs below</strong></p>
+                <p>An initiation fee of 20% of the total Subscription Amount will be required at the next registration step. This fee covers the cost of acquiring and upfront caring for your animal.</p>
+                <p>The remaining 80% will be evenly distributed over the subscription duration you select in the next section (monthly payments).</p>
+                
+                <div class="example-box">
+                    <h4>Example:</h4>
+                    <p>If you choose the Premium Leap Pack with a total subscription amount of ₦150,000, you will pay ₦30,000 upfront (20%) as your initiation fee during the next registration stage. This fee covers part of the cost of acquiring and caring for the animals in your pack.</p>
+                    <p>The remaining ₦120,000 will then be spread evenly across the number of months you select for your subscription duration in the next section.</p>
+                </div>
+                
+                <p><strong>Please note that this 20% initiation fee is not an additional charge; it is simply the first portion of your total subscription amount, required to complete your registration process.</strong></p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Cancel</button>
+                <button class="modal-btn modal-btn-primary" onclick="proceedToRegistration()">I Understand, Proceed</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -381,12 +532,37 @@
             }
             
             document.getElementById('age').value = age + ' years';
+            
+            // Check if age is less than 16
+            if (age < 16) {
+                this.style.borderColor = '#ff4444';
+                this.style.boxShadow = '0 0 0 3px rgba(255, 68, 68, 0.1)';
+                showErrorMessage('Sorry, you must be at least 16 years old to register. We cannot proceed with your registration at this time.');
+                
+                // Disable the register button
+                const registerBtn = document.querySelector('.register-btn');
+                registerBtn.disabled = true;
+                registerBtn.style.opacity = '0.5';
+                registerBtn.style.cursor = 'not-allowed';
+                registerBtn.textContent = 'Registration Not Available (Age Requirement)';
+            } else {
+                this.style.borderColor = '#e0f4ff';
+                this.style.boxShadow = 'none';
+                
+                // Re-enable the register button
+                const registerBtn = document.querySelector('.register-btn');
+                registerBtn.disabled = false;
+                registerBtn.style.opacity = '1';
+                registerBtn.style.cursor = 'pointer';
+                registerBtn.textContent = 'Get Started';
+            }
         });
 
         // Handle form submission
         document.getElementById('registerForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
+            // Validate form
             const formData = {
                 firstName: document.getElementById('firstName').value,
                 otherNames: document.getElementById('otherNames').value,
@@ -401,13 +577,143 @@
                 gender: document.getElementById('gender').value
             };
             
-            console.log('Registration Data:', formData);
+            // Store form data for later use
+            localStorage.setItem('registrationData', JSON.stringify(formData));
             
-            // Here you would typically send the data to your server
-            alert('Registration successful! Welcome to D-NATure 🌱');
+            // Show the popup
+            showModal();
+        });
+
+        // Modal functions
+        function showModal() {
+            // Check if button is disabled (age requirement)
+            const registerBtn = document.querySelector('.register-btn');
+            if (registerBtn.disabled) {
+                showErrorMessage('Sorry, you must be at least 16 years old to register. We cannot proceed with your registration at this time.');
+                return;
+            }
             
-            // Redirect to landing page or dashboard
-            window.location.href = 'landing.html';
+            // Validate form first
+            if (!validateForm()) {
+                return;
+            }
+            
+            const modal = document.getElementById('infoModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function validateForm() {
+            const form = document.getElementById('registerForm');
+            const requiredFields = form.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.borderColor = '#ff4444';
+                    field.style.boxShadow = '0 0 0 3px rgba(255, 68, 68, 0.1)';
+                    isValid = false;
+                    
+                    // Remove error styling after user starts typing
+                    field.addEventListener('input', function() {
+                        this.style.borderColor = '#e0f4ff';
+                        this.style.boxShadow = 'none';
+                    }, { once: true });
+                }
+            });
+            
+            // Check age validation
+            const dobField = document.getElementById('dob');
+            if (dobField.value) {
+                const dob = new Date(dobField.value);
+                const today = new Date();
+                let age = today.getFullYear() - dob.getFullYear();
+                const monthDiff = today.getMonth() - dob.getMonth();
+                
+                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+                    age--;
+                }
+                
+                if (age < 16) {
+                    dobField.style.borderColor = '#ff4444';
+                    dobField.style.boxShadow = '0 0 0 3px rgba(255, 68, 68, 0.1)';
+                    isValid = false;
+                    showErrorMessage('You must be at least 16 years old to register');
+                }
+            }
+            
+            if (!isValid) {
+                // Scroll to first invalid field
+                const firstInvalid = form.querySelector('[required]:invalid, [required][style*="border-color: rgb(255, 68, 68)"], [style*="border-color: rgb(255, 68, 68)"]');
+                if (firstInvalid) {
+                    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstInvalid.focus();
+                }
+                
+                // Show error message if not already shown
+                if (!document.querySelector('.error-message')) {
+                    showErrorMessage('Please fill in all required fields correctly');
+                }
+            }
+            
+            return isValid;
+        }
+
+        function showErrorMessage(message) {
+            // Remove existing error message
+            const existingError = document.querySelector('.error-message');
+            if (existingError) {
+                existingError.remove();
+            }
+            
+            // Create error message
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.style.cssText = `
+                background: #ff4444;
+                color: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                margin: 20px 0;
+                text-align: center;
+                font-weight: 500;
+                animation: fadeInUp 0.3s ease-out;
+            `;
+            errorDiv.textContent = message;
+            
+            // Insert before the button
+            const button = document.querySelector('.register-btn');
+            button.parentNode.insertBefore(errorDiv, button);
+            
+            // Remove after 5 seconds
+            setTimeout(() => {
+                if (errorDiv.parentNode) {
+                    errorDiv.remove();
+                }
+            }, 5000);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('infoModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function proceedToRegistration() {
+            console.log('Proceeding to next registration step...');
+            
+            // Store that user has seen payment info
+            localStorage.setItem('paymentInfoSeen', 'true');
+            
+            // Redirect to packages page
+            window.location.href = 'packages.html';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('infoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
         });
     </script>
 </body>

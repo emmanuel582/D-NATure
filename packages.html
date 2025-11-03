@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Packages - D-NATure</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #98deeb 0%, #cce9ed 25%, #e8eef0 50%, #f0f0f0 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            color: #4a4a4a;
+        }
+
+        .packages-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .featured-package {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .featured-image {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .featured-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+            padding: 30px;
+            color: white;
+        }
+
+        .featured-overlay .package-name {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .featured-overlay .package-content {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .featured-overlay .return-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #04789D 0%, #C8E6C9 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .featured-details {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 15px;
+        }
+
+        .featured-details .detail-value {
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .featured-details .detail-label {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .regular-packages {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .package-card-compact {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            animation: fadeInUp 0.6s ease-out both;
+            display: grid;
+            grid-template-columns: 130px 1fr;
+            gap: 15px;
+            min-height: 160px;
+        }
+
+        .package-card-compact:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(4, 120, 157, 0.2);
+        }
+
+        .compact-image {
+            width: 130px;
+            height: 100%;
+            min-height: 160px;
+        }
+
+        .compact-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .compact-info {
+            padding: 20px 20px 20px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .compact-info .package-name {
+            font-size: 17px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 3px;
+        }
+
+        .compact-info .package-content {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .compact-info .return-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #04789D 0%, #C8E6C9 100%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            width: fit-content;
+        }
+
+        .compact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+
+        .compact-details .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .compact-details .detail-value {
+            font-weight: 600;
+            color: #04789D;
+            font-size: 15px;
+        }
+
+        .compact-details .detail-label {
+            color: #666;
+        }
+
+        .compact-btn {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #04789D 0%, #C8E6C9 100%);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        .compact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(4, 120, 157, 0.3);
+        }
+
+        .package-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            animation: fadeInUp 0.6s ease-out both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .package-card:nth-child(1) { animation-delay: 0.1s; }
+        .package-card:nth-child(2) { animation-delay: 0.15s; }
+        .package-card:nth-child(3) { animation-delay: 0.2s; }
+        .package-card:nth-child(4) { animation-delay: 0.25s; }
+        .package-card:nth-child(5) { animation-delay: 0.3s; }
+        .package-card:nth-child(6) { animation-delay: 0.35s; }
+        .package-card:nth-child(7) { animation-delay: 0.4s; }
+        .package-card:nth-child(8) { animation-delay: 0.45s; }
+        .package-card:nth-child(9) { animation-delay: 0.5s; }
+        .package-card:nth-child(10) { animation-delay: 0.55s; }
+        .package-card:nth-child(11) { animation-delay: 0.6s; }
+        .package-card:nth-child(12) { animation-delay: 0.65s; }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(4, 120, 157, 0.2);
+        }
+
+        .package-image {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #C8E6C9 0%, #A5D6A7 100%);
+            border-radius: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .package-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .package-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .package-content {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .package-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+
+        .detail-label {
+            color: #666;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: #04789D;
+        }
+
+        .return-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #04789D 0%, #C8E6C9 100%);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .select-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #04789D 0%, #C8E6C9 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .select-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(4, 120, 157, 0.3);
+        }
+
+        /* Popup Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .popup-overlay.show {
+            display: flex;
+        }
+
+        .popup-content {
+            background: white;
+            border-radius: 30px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s ease-out;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .popup-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .popup-content {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .popup-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .popup-header .emoji {
+            margin-right: 10px;
+            font-size: 24px;
+        }
+
+        .popup-body {
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        .popup-body p {
+            margin-bottom: 15px;
+        }
+
+        .popup-body .highlight {
+            background: linear-gradient(135deg, #04789D 0%, #C8E6C9 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-weight: 500;
+        }
+
+        .popup-body .example {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #04789D;
+            margin: 15px 0;
+        }
+
+        .popup-body .example-title {
+            font-weight: 600;
+            color: #04789D;
+            margin-bottom: 10px;
+        }
+
+        .popup-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+
+        .popup-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .popup-btn.cancel {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        .popup-btn.cancel:hover {
+            background: #e0e0e0;
+        }
+
+        .popup-btn.proceed {
+            background: linear-gradient(135deg, #04789D 0%, #C8E6C9 100%);
+            color: white;
+        }
+
+        .popup-btn.proceed:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(4, 120, 157, 0.3);
+        }
+
+        .duration-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .duration-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border: 2px solid transparent;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .duration-option:hover {
+            background: linear-gradient(135deg, #04789D 0%, #C8E6C9 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(4, 120, 157, 0.2);
+        }
+
+        .duration-main {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .duration-arrow {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 15px;
+        }
+
+        .duration-payout {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .summary-popup .popup-content {
+            max-width: 600px;
+        }
+
+        .summary-section {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-section:last-child {
+            border-bottom: none;
+        }
+
+        .summary-section h4 {
+            color: #04789D;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .summary-pack-display {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: linear-gradient(135deg, #04789D 0%, #C8E6C9 100%);
+            padding: 20px;
+            border-radius: 15px;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .summary-pack-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .summary-pack-info h3 {
+            margin: 0 0 5px 0;
+            font-size: 18px;
+        }
+
+        .summary-pack-info p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .summary-note {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #04789D;
+            font-style: italic;
+            color: #666;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .packages-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .popup-content {
+                padding: 20px;
+                margin: 20px;
+            }
+
+            .popup-buttons {
+                flex-direction: column;
+            }
+
+            .summary-pack-display {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .summary-pack-image {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌱 Investment Packages</h1>
+            <p>Choose the perfect package for your investment journey</p>
+        </div>
+
+        <div class="packages-grid">
+            <!-- Featured Package 1 - Lion's Share Pack -->
+            <div class="featured-package" onclick="selectPackage(12)">
+                <div class="featured-image">
+                    <img src="https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152277/%D0%AD%D1%82%D0%B8_%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8_%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE_%D0%B7%D0%B0%D0%B1%D1%80%D0%B0%D1%82%D1%8C_%D0%B2_%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B5%D0%BC_%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5_%D0%B2_%D0%A2%D0%93_%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%B5_fxcnrr.jpg" alt="Lion's Share Pack">
+                    <div class="featured-overlay">
+                        <div class="return-badge">40% Return</div>
+                        <div class="package-name">Lion's Share Pack</div>
+                        <div class="package-content">🦃 5 Turkeys + 🐔 3 Fowls</div>
+                        <div class="featured-details">
+                            <div>
+                                <div class="detail-label">Investment</div>
+                                <div class="detail-value">₦300,000</div>
+                            </div>
+                            <div>
+                                <div class="detail-label">Total Payout</div>
+                                <div class="detail-value">₦420,000</div>
+                            </div>
+                        </div>
+                        <button class="select-btn" onclick="event.stopPropagation(); selectPackage(12)">Select Package</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Regular Packages Grid -->
+            <div class="regular-packages">
+                <!-- Package 1 -->
+                <div class="package-card-compact" onclick="selectPackage(1)">
+                    <div class="compact-image">
+                        <img src="https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152215/Curcan_sus4vk.jpg" alt="Timid Investor Pack">
+                    </div>
+                    <div class="compact-info">
+                        <div class="return-badge">30% Return</div>
+                        <div class="package-name">Timid Investor Pack</div>
+                        <div class="package-content">🐔 1 Fowl</div>
+                        <div class="compact-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Investment</span>
+                                <span class="detail-value">₦20,000</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Total Payout</span>
+                                <span class="detail-value">₦26,000</span>
+                            </div>
+                        </div>
+                        <button class="compact-btn" onclick="event.stopPropagation(); selectPackage(1)">Select</button>
+                    </div>
+                </div>
+
+                <!-- Package 2 -->
+                <div class="package-card-compact" onclick="selectPackage(2)">
+                    <div class="compact-image">
+                        <img src="https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152277/%D0%AD%D1%82%D0%B8_%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8_%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE_%D0%B7%D0%B0%D0%B1%D1%80%D0%B0%D1%82%D1%8C_%D0%B2_%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B5%D0%BC_%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5_%D0%B2_%D0%A2%D0%93_%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%B5_fxcnrr.jpg" alt="New Taker Pack">
+                    </div>
+                    <div class="compact-info">
+                        <div class="return-badge">32% Return</div>
+                        <div class="package-name">New Taker Pack</div>
+                        <div class="package-content">🐔 2 Fowls</div>
+                        <div class="compact-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Investment</span>
+                                <span class="detail-value">₦40,000</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Total Payout</span>
+                                <span class="detail-value">₦52,800</span>
+                            </div>
+                        </div>
+                        <button class="compact-btn" onclick="event.stopPropagation(); selectPackage(2)">Select</button>
+                    </div>
+                </div>
+
+                <!-- Package 3 -->
+                <div class="package-card-compact" onclick="selectPackage(3)">
+                    <div class="compact-image">
+                        <img src="https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152215/Curcan_sus4vk.jpg" alt="Student Survival Pack">
+                    </div>
+                    <div class="compact-info">
+                        <div class="return-badge">33% Return</div>
+                        <div class="package-name">Student Survival Pack</div>
+                        <div class="package-content">🦃 1 Turkey</div>
+                        <div class="compact-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Investment</span>
+                                <span class="detail-value">₦50,000</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Total Payout</span>
+                                <span class="detail-value">₦66,500</span>
+                            </div>
+                        </div>
+                        <button class="compact-btn" onclick="event.stopPropagation(); selectPackage(3)">Select</button>
+                    </div>
+                </div>
+
+                <!-- Package 4 -->
+                <div class="package-card-compact" onclick="selectPackage(4)">
+                    <div class="compact-image">
+                        <img src="https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152277/%D0%AD%D1%82%D0%B8_%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8_%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE_%D0%B7%D0%B0%D0%B1%D1%80%D0%B0%D1%82%D1%8C_%D0%B2_%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B5%D0%BC_%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5_%D0%B2_%D0%A2%D0%93_%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%B5_fxcnrr.jpg" alt="Bold Step Pack">
+                    </div>
+                    <div class="compact-info">
+                        <div class="return-badge">34% Return</div>
+                        <div class="package-name">Bold Step Pack</div>
+                        <div class="package-content">🐔 3 Fowls</div>
+                        <div class="compact-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Investment</span>
+                                <span class="detail-value">₦60,000</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Total Payout</span>
+                                <span class="detail-value">₦80,400</span>
+                            </div>
+                        </div>
+                        <button class="compact-btn" onclick="event.stopPropagation(); selectPackage(4)">Select</button>
+                    </div>
+                </div>
+
+                <!-- Package 5 -->
+                <div class="package-card-compact" onclick="selectPackage(5)">
+                    <div class="compact-image">
+                        <img src="https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152215/Curcan_sus4vk.jpg" alt="Sharp Investor Pack">
+                    </div>
+                    <div class="compact-info">
+                        <div class="return-badge">35% Return</div>
+                        <div class="package-name">Sharp Investor Pack</div>
+                        <div class="package-content">🦃 1 Turkey + 🐔 1 Fowl</div>
+                        <div class="compact-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Investment</span>
+                                <span class="detail-value">₦70,000</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Total Payout</span>
+                                <span class="detail-value">₦94,500</span>
+                            </div>
+                        </div>
+                        <button class="compact-btn" onclick="event.stopPropagation(); selectPackage(5)">Select</button>
+                    </div>
+                </div>
+
+                <!-- Package 6 -->
+                <div class="package-card-compact" onclick="selectPackage(6)">
+                    <div class="compact-image">
+                        <img src="https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152277/%D0%AD%D1%82%D0%B8_%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8_%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE_%D0%B7%D0%B0%D0%B1%D1%80%D0%B0%D1%82%D1%8C_%D0%B2_%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B5%D0%BC_%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5_%D0%B2_%D0%A2%D0%93_%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%B5_fxcnrr.jpg" alt="Investor's Confidence Pack">
+                    </div>
+                    <div class="compact-info">
+                        <div class="return-badge">36% Return</div>
+                        <div class="package-name">Investor's Confidence Pack</div>
+                        <div class="package-content">🐔 4 Fowls</div>
+                        <div class="compact-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Investment</span>
+                                <span class="detail-value">₦80,000</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Total Payout</span>
+                                <span class="detail-value">₦108,800</span>
+                            </div>
+                        </div>
+                        <button class="compact-btn" onclick="event.stopPropagation(); selectPackage(6)">Select</button>
+                    </div>
+                </div>
+
+                <!-- Package 7 -->
+                <div class="package-card-compact" onclick="selectPackage(7)">
+                    <div class="compact-image">
+                        <img src="https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152215/Curcan_sus4vk.jpg" alt="Wealth Ladder Pack">
+                    </div>
+                    <div class="compact-info">
+                        <div class="return-badge">37% Return</div>
+                        <div class="package-name">Wealth Ladder Pack</div>
+                        <div class="package-content">🦃 1 Turkey + 🐔 2 Fowls</div>
+                        <div class="compact-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Investment</span>
+                                <span class="detail-value">₦90,000</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Total Payout</span>
+                                <span class="detail-value">₦123,300</span>
+                            </div>
+                        </div>
+                        <button class="compact-btn" onclick="event.stopPropagation(); selectPackage(7)">Select</button>
+                    </div>
+                </div>
+
+                <!-- Package 8 -->
+                <div class="package-card-compact" onclick="selectPackage(8)">
+                    <div class="compact-image">
+                        <img src="https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152277/%D0%AD%D1%82%D0%B8_%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8_%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE_%D0%B7%D0%B0%D0%B1%D1%80%D0%B0%D1%82%D1%8C_%D0%B2_%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B5%D0%BC_%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5_%D0%B2_%D0%A2%D0%93_%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%B5_fxcnrr.jpg" alt="Visionary Stake Pack">
+                    </div>
+                    <div class="compact-info">
+                        <div class="return-badge">38% Return</div>
+                        <div class="package-name">Visionary Stake Pack</div>
+                        <div class="package-content">🦃 2 Turkeys</div>
+                        <div class="compact-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Investment</span>
+                                <span class="detail-value">₦100,000</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Total Payout</span>
+                                <span class="detail-value">₦138,000</span>
+                            </div>
+                        </div>
+                        <button class="compact-btn" onclick="event.stopPropagation(); selectPackage(8)">Select</button>
+                    </div>
+                </div>
+
+                <!-- Package 9 -->
+                <div class="package-card-compact" onclick="selectPackage(9)">
+                    <div class="compact-image">
+                        <img src="https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152215/Curcan_sus4vk.jpg" alt="Impact Stake Pack">
+                    </div>
+                    <div class="compact-info">
+                        <div class="return-badge">39% Return</div>
+                        <div class="package-name">Impact Stake Pack</div>
+                        <div class="package-content">🦃 2 Turkeys + 🐔 1 Fowl</div>
+                        <div class="compact-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Investment</span>
+                                <span class="detail-value">₦120,000</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Total Payout</span>
+                                <span class="detail-value">₦166,800</span>
+                            </div>
+                        </div>
+                        <button class="compact-btn" onclick="event.stopPropagation(); selectPackage(9)">Select</button>
+                    </div>
+                </div>
+
+                <!-- Package 10 -->
+                <div class="package-card-compact" onclick="selectPackage(10)">
+                    <div class="compact-image">
+                        <img src="https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152277/%D0%AD%D1%82%D0%B8_%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8_%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE_%D0%B7%D0%B0%D0%B1%D1%80%D0%B0%D1%82%D1%8C_%D0%B2_%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B5%D0%BC_%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5_%D0%B2_%D0%A2%D0%93_%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%B5_fxcnrr.jpg" alt="Premium Leap Pack">
+                    </div>
+                    <div class="compact-info">
+                        <div class="return-badge">40% Return</div>
+                        <div class="package-name">Premium Leap Pack</div>
+                        <div class="package-content">🦃 3 Turkeys</div>
+                        <div class="compact-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Investment</span>
+                                <span class="detail-value">₦150,000</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Total Payout</span>
+                                <span class="detail-value">₦210,000</span>
+                            </div>
+                        </div>
+                        <button class="compact-btn" onclick="event.stopPropagation(); selectPackage(10)">Select</button>
+                    </div>
+                </div>
+
+                <!-- Package 11 -->
+                <div class="package-card-compact" onclick="selectPackage(11)">
+                    <div class="compact-image">
+                        <img src="https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152215/Curcan_sus4vk.jpg" alt="Jumbo Loaf Pack">
+                    </div>
+                    <div class="compact-info">
+                        <div class="return-badge">40% Return</div>
+                        <div class="package-name">Jumbo Loaf Pack</div>
+                        <div class="package-content">🦃 4 Turkeys</div>
+                        <div class="compact-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Investment</span>
+                                <span class="detail-value">₦200,000</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Total Payout</span>
+                                <span class="detail-value">₦280,000</span>
+                            </div>
+                        </div>
+                        <button class="compact-btn" onclick="event.stopPropagation(); selectPackage(11)">Select</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Information Popup -->
+    <div id="paymentInfoPopup" class="popup-overlay">
+        <div class="popup-content">
+            <div class="popup-header">
+                <span class="emoji">🌱</span>
+                Important Payment Information
+            </div>
+            <div class="popup-body">
+                <p>For the Packs below</p>
+                <p>An initiation fee of <strong>20% of the total Subscription Amount</strong> will be required at the next registration step. This fee covers the cost of acquiring and upfront caring for your animal.</p>
+                <p>The remaining <strong>80%</strong> will be evenly distributed over the subscription duration you select in the next section (monthly payments).</p>
+                
+                <div class="example">
+                    <div class="example-title">Example:</div>
+                    <p>If you choose the Premium Leap Pack with a total subscription amount of ₦150,000, you will pay <strong>₦30,000 upfront (20%)</strong> as your initiation fee during the next registration stage. This fee covers part of the cost of acquiring and caring for the animals in your pack.</p>
+                    <p>The remaining <strong>₦120,000</strong> will then be spread evenly across the number of months you select for your subscription duration in the next section.</p>
+                </div>
+
+                <div class="highlight">
+                    Please note that this 20% initiation fee is not an additional charge; it is simply the first portion of your total subscription amount, required to complete your registration process.
+                </div>
+
+                <p><strong>Subscription Duration Information</strong></p>
+                <p>The number of months you choose for your duration of subscription does not affect the total amount of subscription or the total amount of payout. It only determines how your payments and returns are spread across time, providing flexibility and ease—especially when subscribing to higher-value packs.</p>
+                
+                <div class="example">
+                    <div class="example-title">Example:</div>
+                    <p>Let's say you choose the Premium Leap Pack with a total subscription amount of ₦150,000.</p>
+                    <p>If you select a 9-month subscription duration, this means you'll complete all your subscription payments within 9 months. Based on the system structure, your payout duration will then be 3 months (making a complete 12-month cycle).</p>
+                </div>
+
+                <div class="highlight">
+                    "This ensures every investor experiences a predictable 12-month cycle—simple, transparent, and flexible."
+                </div>
+            </div>
+            <div class="popup-buttons">
+                <button class="popup-btn cancel" onclick="closePopup('paymentInfoPopup')">Cancel</button>
+                <button class="popup-btn proceed" onclick="proceedFromPaymentInfo()">I Understand, Proceed</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Subscription Duration Information Popup -->
+    <div id="durationInfoPopup" class="popup-overlay">
+        <div class="popup-content">
+            <div class="popup-header">
+                <span class="emoji">📅</span>
+                Subscription Duration Information
+            </div>
+            <div class="popup-body">
+                <p><strong>Note:</strong></p>
+                <p>The number of months you choose for your duration of subscription does not affect the total amount of subscription or the total amount of payout. It only determines how your payments and returns are spread across time, providing flexibility and ease—especially when subscribing to higher-value packs.</p>
+                
+                <div class="example">
+                    <div class="example-title">Example:</div>
+                    <p>Let's say you choose the Premium Leap Pack with a total subscription amount of ₦150,000.</p>
+                    <p>If you select a 9-month subscription duration, this means you'll complete all your subscription payments within 9 months. Based on the system structure, your payout duration will then be 3 months (making a complete 12-month cycle).</p>
+                </div>
+
+                <div class="highlight">
+                    "This ensures every investor experiences a predictable 12-month cycle—simple, transparent, and flexible."
+                </div>
+            </div>
+            <div class="popup-buttons">
+                <button class="popup-btn proceed" onclick="showDurationSelection()">I Understand, Proceed</button>
+                <button class="popup-btn cancel" onclick="closePopup('durationInfoPopup')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Duration Selection Popup -->
+    <div id="durationSelectionPopup" class="popup-overlay">
+        <div class="popup-content">
+            <div class="popup-header">
+                <span class="emoji">⏰</span>
+                Select Your Subscription Duration
+            </div>
+            <div class="popup-body">
+                <p>Choose your preferred subscription duration. Each option maintains a 12-month total cycle:</p>
+                
+                <div class="duration-options">
+                    <div class="duration-option" onclick="selectDuration(6, 6)">
+                        <div class="duration-main">6-month subscription</div>
+                        <div class="duration-arrow">→</div>
+                        <div class="duration-payout">6-month payout</div>
+                    </div>
+                    
+                    <div class="duration-option" onclick="selectDuration(7, 5)">
+                        <div class="duration-main">7-month subscription</div>
+                        <div class="duration-arrow">→</div>
+                        <div class="duration-payout">5-month payout</div>
+                    </div>
+                    
+                    <div class="duration-option" onclick="selectDuration(8, 4)">
+                        <div class="duration-main">8-month subscription</div>
+                        <div class="duration-arrow">→</div>
+                        <div class="duration-payout">4-month payout</div>
+                    </div>
+                    
+                    <div class="duration-option" onclick="selectDuration(9, 3)">
+                        <div class="duration-main">9-month subscription</div>
+                        <div class="duration-arrow">→</div>
+                        <div class="duration-payout">3-month payout</div>
+                    </div>
+                    
+                    <div class="duration-option" onclick="selectDuration(10, 2)">
+                        <div class="duration-main">10-month subscription</div>
+                        <div class="duration-arrow">→</div>
+                        <div class="duration-payout">2-month payout</div>
+                    </div>
+                    
+                    <div class="duration-option" onclick="selectDuration(11, 1)">
+                        <div class="duration-main">11-month subscription</div>
+                        <div class="duration-arrow">→</div>
+                        <div class="duration-payout">1-month payout</div>
+                    </div>
+                </div>
+            </div>
+            <div class="popup-buttons">
+                <button class="popup-btn cancel" onclick="closePopup('durationSelectionPopup')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Popup -->
+    <div id="summaryPopup" class="popup-overlay">
+        <div class="popup-content summary-popup">
+            <div class="popup-header">
+                <span class="emoji">📋</span>
+                Investment Summary
+            </div>
+            <div class="popup-body">
+                <div class="summary-section">
+                    <div class="summary-pack-display">
+                        <img id="summaryPackImage" src="" alt="Selected Pack" class="summary-pack-image">
+                        <div class="summary-pack-info">
+                            <h3 id="summaryPackName"></h3>
+                            <p id="summaryPackContent"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="summary-section">
+                    <h4>1. Investment Pack Selection</h4>
+                    <p>You selected the <strong id="summaryPackNameText"></strong>, which means you are subscribing to the rearing of <strong id="summaryAnimals"></strong> under D-NATure's management system.</p>
+                </div>
+
+                <div class="summary-section">
+                    <h4>2. Subscription Cost Breakdown</h4>
+                    <p>Your total subscription amount is <strong id="summaryTotalAmount"></strong>.</p>
+                    <p>An initiation fee of 20% (<strong id="summaryInitiationFee"></strong>) will be paid at the next registration step to cover part of the cost of acquiring and caring for your animals.</p>
+                    <p>The remaining <strong id="summaryBalanceAmount"></strong> will be distributed evenly over your chosen subscription duration.</p>
+                </div>
+
+                <div class="summary-section">
+                    <h4>3. Subscription Duration</h4>
+                    <p>You selected a <strong id="summarySubscriptionMonths"></strong>-month subscription duration.</p>
+                    <p>This means you will make <strong id="summaryMonthlyPayment"></strong> monthly payments for the next <strong id="summarySubscriptionMonthsText"></strong> months.</p>
+                </div>
+
+                <div class="summary-section">
+                    <h4>4. Payout Duration and Structure</h4>
+                    <p>Based on your subscription choice, your payout duration will be <strong id="summaryPayoutMonths"></strong> months.</p>
+                    <p>You will receive all your payout within <strong id="summaryPayoutMonthsText"></strong> months.</p>
+                </div>
+
+                <div class="summary-section">
+                    <h4>5. Cycle Summary</h4>
+                    <p>Your full investment cycle runs for 12 months in total—a combination of your <strong id="summaryCycleSubscription"></strong>-month payment period and <strong id="summaryCyclePayout"></strong>-month payout period.</p>
+                    <p>At the end of this cycle, you will have received a total payout of <strong id="summaryTotalPayout"></strong>, completing your D-NATure investment round.</p>
+                </div>
+
+                <div class="summary-note">
+                    "Please review this summary carefully to ensure all details reflect your intended choices before submitting"
+                </div>
+            </div>
+            <div class="popup-buttons">
+                <button class="popup-btn proceed" onclick="proceedToRegistration()">Proceed to Registration</button>
+                <button class="popup-btn cancel" onclick="closePopup('summaryPopup')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Allow direct access to packages page
+        window.onload = function() {
+            // No validation needed - users can access packages directly
+        };
+
+        let selectedPackageId = null;
+
+        function selectPackage(packageId) {
+            console.log('Selected package:', packageId);
+            selectedPackageId = packageId;
+            // Store selected package
+            localStorage.setItem('selectedPackage', packageId);
+            // Show duration info popup when selecting package
+            showPopup('durationInfoPopup');
+        }
+
+        function showPopup(popupId) {
+            const popup = document.getElementById(popupId);
+            popup.classList.add('show');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closePopup(popupId) {
+            const popup = document.getElementById(popupId);
+            popup.classList.remove('show');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        function proceedFromPaymentInfo() {
+            closePopup('paymentInfoPopup');
+            // Redirect to packages page
+            window.location.href = 'packages.html';
+        }
+
+        function showDurationSelection() {
+            closePopup('durationInfoPopup');
+            showPopup('durationSelectionPopup');
+        }
+
+        function selectDuration(subscriptionMonths, payoutMonths) {
+            localStorage.setItem('subscriptionDuration', subscriptionMonths);
+            localStorage.setItem('payoutDuration', payoutMonths);
+            closePopup('durationSelectionPopup');
+            // Redirect to summary page
+            window.location.href = 'summary.html';
+        }
+
+        function showPaymentInfoPopup() {
+            showPopup('paymentInfoPopup');
+        }
+
+        function showSummaryPopup() {
+            populateSummary();
+            showPopup('summaryPopup');
+        }
+
+        function populateSummary() {
+            const packageId = localStorage.getItem('selectedPackage');
+            const subscriptionMonths = localStorage.getItem('subscriptionDuration');
+            const payoutMonths = localStorage.getItem('payoutDuration');
+
+            // Package data
+            const packages = {
+                1: { name: "Timid Investor Pack", content: "🐔 1 Fowl", amount: 20000, payout: 26000, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152215/Curcan_sus4vk.jpg", fowls: 1, turkeys: 0 },
+                2: { name: "New Taker Pack", content: "🐔 2 Fowls", amount: 40000, payout: 52800, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152277/%D0%AD%D1%82%D0%B8_%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8_%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE_%D0%B7%D0%B0%D0%B1%D1%80%D0%B0%D1%82%D1%8C_%D0%B2_%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B5%D0%BC_%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5_%D0%B2_%D0%A2%D0%93_%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%B5_fxcnrr.jpg", fowls: 2, turkeys: 0 },
+                3: { name: "Student Survival Pack", content: "🦃 1 Turkey", amount: 50000, payout: 66500, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152215/Curcan_sus4vk.jpg", fowls: 0, turkeys: 1 },
+                4: { name: "Bold Step Pack", content: "🐔 3 Fowls", amount: 60000, payout: 80400, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152277/%D0%AD%D1%82%D0%B8_%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8_%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE_%D0%B7%D0%B0%D0%B1%D1%80%D0%B0%D1%82%D1%8C_%D0%B2_%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B5%D0%BC_%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5_%D0%B2_%D0%A2%D0%93_%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%B5_fxcnrr.jpg", fowls: 3, turkeys: 0 },
+                5: { name: "Sharp Investor Pack", content: "🦃 1 Turkey + 🐔 1 Fowl", amount: 70000, payout: 94500, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152215/Curcan_sus4vk.jpg", fowls: 1, turkeys: 1 },
+                6: { name: "Investor's Confidence Pack", content: "🐔 4 Fowls", amount: 80000, payout: 108800, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152277/%D0%AD%D1%82%D0%B8_%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8_%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE_%D0%B7%D0%B0%D0%B1%D1%80%D0%B0%D1%82%D1%8C_%D0%B2_%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B5%D0%BC_%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5_%D0%B2_%D0%A2%D0%93_%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%B5_fxcnrr.jpg", fowls: 4, turkeys: 0 },
+                7: { name: "Wealth Ladder Pack", content: "🦃 1 Turkey + 🐔 2 Fowls", amount: 90000, payout: 123300, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152215/Curcan_sus4vk.jpg", fowls: 2, turkeys: 1 },
+                8: { name: "Visionary Stake Pack", content: "🦃 2 Turkeys", amount: 100000, payout: 138000, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152277/%D0%AD%D1%82%D0%B8_%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8_%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE_%D0%B7%D0%B0%D0%B1%D1%80%D0%B0%D1%82%D1%8C_%D0%B2_%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B5%D0%BC_%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5_%D0%B2_%D0%A2%D0%93_%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%B5_fxcnrr.jpg", fowls: 0, turkeys: 2 },
+                9: { name: "Impact Stake Pack", content: "🦃 2 Turkeys + 🐔 1 Fowl", amount: 120000, payout: 166800, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152215/Curcan_sus4vk.jpg", fowls: 1, turkeys: 2 },
+                10: { name: "Premium Leap Pack", content: "🦃 3 Turkeys", amount: 150000, payout: 210000, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152277/%D0%AD%D1%82%D0%B8_%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8_%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE_%D0%B7%D0%B0%D0%B1%D1%80%D0%B0%D1%82%D1%8C_%D0%B2_%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B5%D0%BC_%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5_%D0%B2_%D0%A2%D0%93_%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%B5_fxcnrr.jpg", fowls: 0, turkeys: 3 },
+                11: { name: "Jumbo Loaf Pack", content: "🦃 4 Turkeys", amount: 200000, payout: 280000, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152215/Curcan_sus4vk.jpg", fowls: 0, turkeys: 4 },
+                12: { name: "Lion's Share Pack", content: "🦃 5 Turkeys + 🐔 3 Fowls", amount: 300000, payout: 420000, image: "https://res.cloudinary.com/drfzrl9zj/image/upload/v1762152277/%D0%AD%D1%82%D0%B8_%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8_%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE_%D0%B7%D0%B0%D0%B1%D1%80%D0%B0%D1%82%D1%8C_%D0%B2_%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B5%D0%BC_%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5_%D0%B2_%D0%A2%D0%93_%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%B5_fxcnrr.jpg", fowls: 3, turkeys: 5 }
+            };
+
+            const pack = packages[packageId];
+            const initiationFee = Math.round(pack.amount * 0.2);
+            const balanceAmount = pack.amount - initiationFee;
+            const monthlyPayment = Math.round(balanceAmount / subscriptionMonths);
+
+            // Animals description
+            let animalsText = "";
+            if (pack.fowls > 0 && pack.turkeys > 0) {
+                animalsText = `${pack.fowls} Fowl(s) and ${pack.turkeys} Turkey(s)`;
+            } else if (pack.fowls > 0) {
+                animalsText = `${pack.fowls} Fowl(s)`;
+            } else {
+                animalsText = `${pack.turkeys} Turkey(s)`;
+            }
+
+            // Populate summary
+            document.getElementById('summaryPackImage').src = pack.image;
+            document.getElementById('summaryPackName').textContent = pack.name;
+            document.getElementById('summaryPackContent').textContent = pack.content;
+            document.getElementById('summaryPackNameText').textContent = pack.name;
+            document.getElementById('summaryAnimals').textContent = animalsText;
+            document.getElementById('summaryTotalAmount').textContent = `₦${pack.amount.toLocaleString()}`;
+            document.getElementById('summaryInitiationFee').textContent = `₦${initiationFee.toLocaleString()}`;
+            document.getElementById('summaryBalanceAmount').textContent = `₦${balanceAmount.toLocaleString()}`;
+            document.getElementById('summarySubscriptionMonths').textContent = subscriptionMonths;
+            document.getElementById('summarySubscriptionMonthsText').textContent = subscriptionMonths;
+            document.getElementById('summaryMonthlyPayment').textContent = `₦${monthlyPayment.toLocaleString()}`;
+            document.getElementById('summaryPayoutMonths').textContent = payoutMonths;
+            document.getElementById('summaryPayoutMonthsText').textContent = payoutMonths;
+            document.getElementById('summaryCycleSubscription').textContent = subscriptionMonths;
+            document.getElementById('summaryCyclePayout').textContent = payoutMonths;
+            document.getElementById('summaryTotalPayout').textContent = `₦${pack.payout.toLocaleString()}`;
+        }
+
+        function proceedToRegistration() {
+            closePopup('summaryPopup');
+            window.location.href = 'l.html';
+        }
+
+        // Close popup when clicking outside
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('popup-overlay')) {
+                const popupId = event.target.id;
+                closePopup(popupId);
+            }
+        });
+
+        // Close popup with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const openPopup = document.querySelector('.popup-overlay.show');
+                if (openPopup) {
+                    closePopup(openPopup.id);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
