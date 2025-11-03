@@ -572,10 +572,33 @@
 
             // Add click handlers to transcript words
             document.querySelectorAll('.transcript-word').forEach(word => {
-                word.addEventListener('click', () => {
-                    const startTime = parseFloat(word.dataset.start);
-                    video.currentTime = startTime;
-                    video.play();
+                word.addEventListener('click', async () => {
+                    try {
+                        const startTime = parseFloat(word.dataset.start);
+                        
+                        // Pause first to avoid conflicts
+                        if (!video.paused) {
+                            video.pause();
+                            // Small delay to ensure pause is processed
+                            await new Promise(resolve => setTimeout(resolve, 50));
+                        }
+                        
+                        // Set time and play
+                        video.currentTime = startTime;
+                        
+                        // Wait for seek to complete before playing
+                        video.addEventListener('seeked', async () => {
+                            try {
+                                await video.play();
+                                playPauseIcon.className = 'fas fa-pause';
+                            } catch (error) {
+                                console.warn('Play after seek error:', error);
+                            }
+                        }, { once: true });
+                        
+                    } catch (error) {
+                        console.warn('Transcript click error:', error);
+                    }
                 });
             });
         }
@@ -619,14 +642,33 @@
             timestamp.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
         }
 
-        // Play/Pause toggle
-        function togglePlayPause() {
-            if (video.paused) {
-                video.play();
-                playPauseIcon.className = 'fas fa-pause';
-            } else {
-                video.pause();
-                playPauseIcon.className = 'fas fa-play';
+        // Play/Pause toggle with error handling
+        async function togglePlayPause() {
+            try {
+                if (video.paused || video.ended) {
+                    // Ensure video is ready before playing
+                    if (video.readyState >= 2) {
+                        await video.play();
+                        playPauseIcon.className = 'fas fa-pause';
+                    } else {
+                        // Wait for video to load
+                        video.addEventListener('canplay', async () => {
+                            await video.play();
+                            playPauseIcon.className = 'fas fa-pause';
+                        }, { once: true });
+                    }
+                } else {
+                    video.pause();
+                    playPauseIcon.className = 'fas fa-play';
+                }
+            } catch (error) {
+                console.warn('Play/pause error:', error);
+                // If play failed, ensure UI reflects correct state
+                if (video.paused) {
+                    playPauseIcon.className = 'fas fa-play';
+                } else {
+                    playPauseIcon.className = 'fas fa-pause';
+                }
             }
         }
 
@@ -696,12 +738,87 @@
             updateActiveWord();
         });
 
-        // Auto-play video when loaded
-        video.addEventListener('loadedmetadata', () => {
+        // Auto-play video when loaded with error handling
+        video.addEventListener('loadedmetadata', async () => {
             updateProgress();
-            video.play();
-            playPauseIcon.className = 'fas fa-pause';
+            try {
+                await video.play();
+                playPauseIcon.className = 'fas fa-pause';
+            } catch (error) {
+                console.warn('Auto-play failed:', error);
+                playPauseIcon.className = 'fas fa-play';
+            }
         });
+        
+        // Add error handling for video loading
+        video.addEventListener('error', (e) => {
+            console.error('Video error:', e);
+            showVideoError();
+        });
+        
+        video.addEventListener('stalled', () => {
+            console.warn('Video stalled, attempting to reload...');
+            retryVideoLoad();
+        });
+        
+        // Video error display function
+        function showVideoError() {
+            const videoSection = document.querySelector('.video-section');
+            videoSection.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: white; text-align: center;">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 48px; margin-bottom: 20px; color: #ff6b6b;"></i>
+                    <h3 style="margin-bottom: 10px;">Video Loading Error</h3>
+                    <p style="margin-bottom: 20px; opacity: 0.8;">Unable to load the video. Please check your connection.</p>
+                    <button onclick="retryVideoLoad()" style="background: #ff6b6b; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer;">Retry</button>
+                </div>
+            `;
+        }
+        
+        // Retry video loading
+        function retryVideoLoad() {
+            const videoSection = document.querySelector('.video-section');
+            videoSection.innerHTML = `
+                <video id="mainVideo">
+                    <source src="https://res.cloudinary.com/drfzrl9zj/video/upload/v1761553452/Oct_19__1621_24s_202510192038_saxlr_yfra2u.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="click-zone click-zone-left" id="clickZoneLeft"></div>
+                <div class="click-zone click-zone-center" id="clickZoneCenter"></div>
+                <div class="click-zone click-zone-right" id="clickZoneRight"></div>
+                <div class="seek-indicator seek-indicator-left" id="seekIndicatorLeft">
+                    <i class="fas fa-undo"></i> 1s
+                </div>
+                <div class="seek-indicator seek-indicator-right" id="seekIndicatorRight">
+                    1s <i class="fas fa-redo"></i>
+                </div>
+                <div class="video-controls" id="videoControls">
+                    <div class="progress-container" id="progressContainer">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    <div class="controls-bottom">
+                        <div class="controls-left">
+                            <button class="control-btn play-pause-btn" id="playPauseBtn">
+                                <i class="fas fa-play" id="playPauseIcon"></i>
+                            </button>
+                            <div class="volume-container">
+                                <button class="control-btn" id="volumeBtn">
+                                    <i class="fas fa-volume-up" id="volumeIcon"></i>
+                                </button>
+                                <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="100">
+                            </div>
+                            <span class="timestamp" id="timestamp">0:00 / 0:00</span>
+                        </div>
+                        <div class="controls-right">
+                            <button class="control-btn" id="settingsBtn">
+                                <i class="fas fa-cog"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            // Reinitialize video player
+            initializeVideoPlayer();
+        }
 
         // Handle video end
         video.addEventListener('ended', () => {
@@ -721,7 +838,94 @@
             `;
         }
 
-        // Initialize transcript
+        // Initialize video player
+        function initializeVideoPlayer() {
+            // Re-get video element and controls after retry
+            const video = document.getElementById('mainVideo');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const playPauseIcon = document.getElementById('playPauseIcon');
+            const progressContainer = document.getElementById('progressContainer');
+            const progressBar = document.getElementById('progressBar');
+            const timestamp = document.getElementById('timestamp');
+            const volumeBtn = document.getElementById('volumeBtn');
+            const volumeIcon = document.getElementById('volumeIcon');
+            const volumeSlider = document.getElementById('volumeSlider');
+            const clickZoneLeft = document.getElementById('clickZoneLeft');
+            const clickZoneCenter = document.getElementById('clickZoneCenter');
+            const clickZoneRight = document.getElementById('clickZoneRight');
+            const seekIndicatorLeft = document.getElementById('seekIndicatorLeft');
+            const seekIndicatorRight = document.getElementById('seekIndicatorRight');
+            
+            // Rebind all event listeners
+            playPauseBtn.addEventListener('click', togglePlayPause);
+            clickZoneCenter.addEventListener('click', togglePlayPause);
+            
+            clickZoneLeft.addEventListener('dblclick', () => {
+                video.currentTime = Math.max(0, video.currentTime - 1);
+                showSeekIndicator(seekIndicatorLeft);
+            });
+            
+            clickZoneRight.addEventListener('dblclick', () => {
+                video.currentTime = Math.min(video.duration, video.currentTime + 1);
+                showSeekIndicator(seekIndicatorRight);
+            });
+            
+            progressContainer.addEventListener('click', (e) => {
+                const rect = progressContainer.getBoundingClientRect();
+                const percent = (e.clientX - rect.left) / rect.width;
+                video.currentTime = percent * video.duration;
+            });
+            
+            volumeSlider.addEventListener('input', (e) => {
+                video.volume = e.target.value / 100;
+                updateVolumeIcon();
+            });
+            
+            volumeBtn.addEventListener('click', () => {
+                if (video.volume > 0) {
+                    video.volume = 0;
+                    volumeSlider.value = 0;
+                } else {
+                    video.volume = 1;
+                    volumeSlider.value = 100;
+                }
+                updateVolumeIcon();
+            });
+            
+            video.addEventListener('timeupdate', () => {
+                updateProgress();
+                updateActiveWord();
+            });
+            
+            video.addEventListener('loadedmetadata', async () => {
+                updateProgress();
+                try {
+                    await video.play();
+                    playPauseIcon.className = 'fas fa-pause';
+                } catch (error) {
+                    console.warn('Auto-play failed:', error);
+                    playPauseIcon.className = 'fas fa-play';
+                }
+            });
+            
+            video.addEventListener('ended', () => {
+                playPauseIcon.className = 'fas fa-play';
+                showGetStartedButton();
+            });
+            
+            video.addEventListener('error', (e) => {
+                console.error('Video error:', e);
+                showVideoError();
+            });
+            
+            video.addEventListener('stalled', () => {
+                console.warn('Video stalled, attempting to reload...');
+                retryVideoLoad();
+            });
+        }
+        
+        // Initialize everything
+        initializeVideoPlayer();
         generateTranscript();
     </script>
 </body>
