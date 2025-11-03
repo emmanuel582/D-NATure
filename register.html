@@ -4,6 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - D-NATure</title>
+    
+    <!-- Open Graph Meta Tags for Social Media Preview -->
+    <meta property="og:title" content="Register with D-NATure - Start Your Agricultural Investment">
+    <meta property="og:description" content="Join D-NATure today! Register to start investing in real farm animals and earn guaranteed returns. Transform agriculture with technology and innovation.">
+    <meta property="og:image" content="https://res.cloudinary.com/drfzrl9zj/image/upload/v1762153600/WhatsApp_Image_2025-10-17_at_6.46.34_AM_o4o3ek.jpg">
+    <meta property="og:url" content="https://d-nature.vercel.app/register.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="D-NATure">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Register with D-NATure - Start Your Agricultural Investment">
+    <meta name="twitter:description" content="Join D-NATure today! Register to start investing in real farm animals and earn guaranteed returns. Transform agriculture with technology and innovation.">
+    <meta name="twitter:image" content="https://res.cloudinary.com/drfzrl9zj/image/upload/v1762153600/WhatsApp_Image_2025-10-17_at_6.46.34_AM_o4o3ek.jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -112,58 +126,75 @@
         .form-control {
             width: 100%;
             padding: 15px 20px;
-            background: #effaff;
-            border: 1px solid #e0f4ff;
+            border: 2px solid #e0e0e0;
             border-radius: 12px;
-            font-size: 15px;
-            color: #333;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            outline: none;
-            position: relative;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-2px);
-            }
-        }
-
-        @keyframes wave {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #fff;
         }
 
         .form-control:focus {
-            border-color: #00bcff;
-            box-shadow: 0 0 0 3px rgba(0, 188, 255, 0.1), 0 4px 12px rgba(0, 188, 255, 0.15);
-            background: linear-gradient(90deg, #effaff 0%, #e0f7ff 25%, #d4f3ff 50%, #e0f7ff 75%, #effaff 100%);
-            background-size: 200% 100%;
-            animation: wave 2s ease-in-out infinite, float 3s ease-in-out infinite;
-            transform: translateY(-1px);
+            outline: none;
+            border-color: #04789D;
+            box-shadow: 0 0 0 3px rgba(4, 120, 157, 0.1);
         }
 
-        .form-control::placeholder {
-            color: #999;
+        /* Custom Date Picker Styles */
+        .custom-date-picker {
+            width: 100%;
         }
 
-        select.form-control {
+        .date-input-group {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .date-select {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            background: #fff;
             cursor: pointer;
+            transition: all 0.3s ease;
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23666" d="M2 0L0 2h4zm0 5L0 3h4z"/></svg>');
             background-repeat: no-repeat;
             background-position: right 15px center;
-            padding-right: 40px;
+            background-size: 12px;
+            padding-right: 45px;
+        }
+
+        .date-select:focus {
+            outline: none;
+            border-color: #04789D;
+            box-shadow: 0 0 0 3px rgba(4, 120, 157, 0.1);
+            background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%2304789D" d="M2 0L0 2h4zm0 5L0 3h4z"/></svg>');
+        }
+
+        .date-select:hover {
+            border-color: #04789D;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(4, 120, 157, 0.15);
+        }
+
+        .date-select option {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        /* Responsive date picker */
+        @media (max-width: 768px) {
+            .date-input-group {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .date-select {
+                width: 100%;
+            }
         }
 
         .input-icon {
@@ -452,7 +483,32 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="dob">Date of Birth</label>
-                    <input type="date" id="dob" class="form-control" required>
+                    <div class="custom-date-picker" id="customDatePicker">
+                        <div class="date-input-group">
+                            <select id="daySelect" class="date-select" required>
+                                <option value="">Day</option>
+                            </select>
+                            <select id="monthSelect" class="date-select" required>
+                                <option value="">Month</option>
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                            <select id="yearSelect" class="date-select" required>
+                                <option value="">Year</option>
+                            </select>
+                        </div>
+                    </div>
+                    <input type="hidden" id="dob" name="dob" required>
                 </div>
 
                 <div class="form-group">
@@ -520,43 +576,159 @@
             }
         });
 
-        // Auto-calculate age from date of birth
-        document.getElementById('dob').addEventListener('change', function() {
-            const dob = new Date(this.value);
-            const today = new Date();
-            let age = today.getFullYear() - dob.getFullYear();
-            const monthDiff = today.getMonth() - dob.getMonth();
+        // Initialize custom date picker
+        function initializeDatePicker() {
+            const daySelect = document.getElementById('daySelect');
+            const monthSelect = document.getElementById('monthSelect');
+            const yearSelect = document.getElementById('yearSelect');
+            const hiddenDobInput = document.getElementById('dob');
             
-            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
-                age--;
+            // Populate days (1-31)
+            for (let i = 1; i <= 31; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i.toString().padStart(2, '0');
+                daySelect.appendChild(option);
             }
             
-            document.getElementById('age').value = age + ' years';
-            
-            // Check if age is less than 16
-            if (age < 16) {
-                this.style.borderColor = '#ff4444';
-                this.style.boxShadow = '0 0 0 3px rgba(255, 68, 68, 0.1)';
-                showErrorMessage('Sorry, you must be at least 16 years old to register. We cannot proceed with your registration at this time.');
-                
-                // Disable the register button
-                const registerBtn = document.querySelector('.register-btn');
-                registerBtn.disabled = true;
-                registerBtn.style.opacity = '0.5';
-                registerBtn.style.cursor = 'not-allowed';
-                registerBtn.textContent = 'Registration Not Available (Age Requirement)';
-            } else {
-                this.style.borderColor = '#e0f4ff';
-                this.style.boxShadow = 'none';
-                
-                // Re-enable the register button
-                const registerBtn = document.querySelector('.register-btn');
-                registerBtn.disabled = false;
-                registerBtn.style.opacity = '1';
-                registerBtn.style.cursor = 'pointer';
-                registerBtn.textContent = 'Get Started';
+            // Populate years (1950-2025)
+            const currentYear = new Date().getFullYear();
+            const maxYear = 2025;
+            for (let i = maxYear; i >= 1950; i--) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                yearSelect.appendChild(option);
             }
-        });
+            
+            // Update days based on selected month and year
+            function updateDays() {
+                const selectedMonth = parseInt(monthSelect.value);
+                const selectedYear = parseInt(yearSelect.value);
+                const selectedDay = daySelect.value;
+                
+                // Clear existing days
+                daySelect.innerHTML = '<option value="">Day</option>';
+                
+                if (selectedMonth && selectedYear) {
+                    const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
+                    
+                    for (let i = 1; i <= daysInMonth; i++) {
+                        const option = document.createElement('option');
+                        option.value = i;
+                        option.textContent = i.toString().padStart(2, '0');
+                        daySelect.appendChild(option);
+                    }
+                    
+                    // Restore selected day if still valid
+                    if (selectedDay && selectedDay <= daysInMonth) {
+                        daySelect.value = selectedDay;
+                    }
+                } else {
+                    // Default days 1-31
+                    for (let i = 1; i <= 31; i++) {
+                        const option = document.createElement('option');
+                        option.value = i;
+                        option.textContent = i.toString().padStart(2, '0');
+                        daySelect.appendChild(option);
+                    }
+                }
+            }
+            
+            // Update hidden input and calculate age
+            function updateDateAndAge() {
+                const day = daySelect.value;
+                const month = monthSelect.value;
+                const year = yearSelect.value;
+                
+                if (day && month && year) {
+                    const dateString = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+                    hiddenDobInput.value = dateString;
+                    
+                    // Calculate age
+                    const dob = new Date(year, month - 1, day);
+                    const today = new Date();
+                    let age = today.getFullYear() - dob.getFullYear();
+                    const monthDiff = today.getMonth() - dob.getMonth();
+                    
+                    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+                        age--;
+                    }
+                    
+                    document.getElementById('age').value = age;
+                } else {
+                    hiddenDobInput.value = '';
+                    document.getElementById('age').value = '';
+                }
+            }
+            
+            // Add event listeners
+            monthSelect.addEventListener('change', () => {
+                updateDays();
+                updateDateAndAge();
+                validateAge();
+            });
+            
+            yearSelect.addEventListener('change', () => {
+                updateDays();
+                updateDateAndAge();
+                validateAge();
+            });
+            
+            daySelect.addEventListener('change', () => {
+                updateDateAndAge();
+                validateAge();
+            });
+        }
+        
+        // Initialize date picker when page loads
+        initializeDatePicker();
+
+        // Age validation for date picker
+        function validateAge() {
+            const daySelect = document.getElementById('daySelect');
+            const monthSelect = document.getElementById('monthSelect');
+            const yearSelect = document.getElementById('yearSelect');
+            
+            if (daySelect.value && monthSelect.value && yearSelect.value) {
+                const dob = new Date(yearSelect.value, monthSelect.value - 1, daySelect.value);
+                const today = new Date();
+                let age = today.getFullYear() - dob.getFullYear();
+                const monthDiff = today.getMonth() - dob.getMonth();
+                
+                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+                    age--;
+                }
+                
+                // Check if age is less than 16
+                if (age < 16) {
+                    [daySelect, monthSelect, yearSelect].forEach(select => {
+                        select.style.borderColor = '#ff4444';
+                        select.style.boxShadow = '0 0 0 3px rgba(255, 68, 68, 0.1)';
+                    });
+                    showErrorMessage('Sorry, you must be at least 16 years old to register.');
+                    
+                    // Disable the register button
+                    const registerBtn = document.querySelector('.register-btn');
+                    registerBtn.disabled = true;
+                    registerBtn.style.opacity = '0.5';
+                    registerBtn.style.cursor = 'not-allowed';
+                    registerBtn.textContent = 'Registration Not Available (Age Requirement)';
+                } else {
+                    [daySelect, monthSelect, yearSelect].forEach(select => {
+                        select.style.borderColor = '#e0e0e0';
+                        select.style.boxShadow = 'none';
+                    });
+                    
+                    // Re-enable the register button
+                    const registerBtn = document.querySelector('.register-btn');
+                    registerBtn.disabled = false;
+                    registerBtn.style.opacity = '1';
+                    registerBtn.style.cursor = 'pointer';
+                    registerBtn.textContent = 'Get Started';
+                }
+            }
+        }
 
         // Handle form submission
         document.getElementById('registerForm').addEventListener('submit', function(e) {
@@ -605,27 +777,39 @@
 
         function validateForm() {
             const form = document.getElementById('registerForm');
-            const requiredFields = form.querySelectorAll('[required]');
             let isValid = true;
             
-            requiredFields.forEach(field => {
+            // Validate text inputs
+            const requiredTextFields = form.querySelectorAll('input[required]:not([type="hidden"]), select[required]:not(.date-select)');
+            requiredTextFields.forEach(field => {
                 if (!field.value.trim()) {
                     field.style.borderColor = '#ff4444';
-                    field.style.boxShadow = '0 0 0 3px rgba(255, 68, 68, 0.1)';
                     isValid = false;
-                    
-                    // Remove error styling after user starts typing
-                    field.addEventListener('input', function() {
-                        this.style.borderColor = '#e0f4ff';
-                        this.style.boxShadow = 'none';
-                    }, { once: true });
+                } else {
+                    field.style.borderColor = '#e0e0e0';
                 }
             });
             
-            // Check age validation
-            const dobField = document.getElementById('dob');
-            if (dobField.value) {
-                const dob = new Date(dobField.value);
+            // Validate custom date picker
+            const daySelect = document.getElementById('daySelect');
+            const monthSelect = document.getElementById('monthSelect');
+            const yearSelect = document.getElementById('yearSelect');
+            const hiddenDob = document.getElementById('dob');
+            
+            if (!daySelect.value || !monthSelect.value || !yearSelect.value) {
+                [daySelect, monthSelect, yearSelect].forEach(select => {
+                    if (!select.value) {
+                        select.style.borderColor = '#ff4444';
+                    }
+                });
+                isValid = false;
+            } else {
+                [daySelect, monthSelect, yearSelect].forEach(select => {
+                    select.style.borderColor = '#e0e0e0';
+                });
+                
+                // Check age validation
+                const dob = new Date(yearSelect.value, monthSelect.value - 1, daySelect.value);
                 const today = new Date();
                 let age = today.getFullYear() - dob.getFullYear();
                 const monthDiff = today.getMonth() - dob.getMonth();
@@ -635,21 +819,16 @@
                 }
                 
                 if (age < 16) {
-                    dobField.style.borderColor = '#ff4444';
-                    dobField.style.boxShadow = '0 0 0 3px rgba(255, 68, 68, 0.1)';
+                    [daySelect, monthSelect, yearSelect].forEach(select => {
+                        select.style.borderColor = '#ff4444';
+                        select.style.boxShadow = '0 0 0 3px rgba(255, 68, 68, 0.1)';
+                    });
                     isValid = false;
                     showErrorMessage('You must be at least 16 years old to register');
                 }
             }
             
             if (!isValid) {
-                // Scroll to first invalid field
-                const firstInvalid = form.querySelector('[required]:invalid, [required][style*="border-color: rgb(255, 68, 68)"], [style*="border-color: rgb(255, 68, 68)"]');
-                if (firstInvalid) {
-                    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    firstInvalid.focus();
-                }
-                
                 // Show error message if not already shown
                 if (!document.querySelector('.error-message')) {
                     showErrorMessage('Please fill in all required fields correctly');
