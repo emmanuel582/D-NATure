@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investment Summary - D-NATure</title>
+    <title>Subscription Summary - D-NATure</title>
     
     <!-- Open Graph Meta Tags for Social Media Preview -->
-    <meta property="og:title" content="D-NATure Investment Summary - Review Your Farm Investment">
-    <meta property="og:description" content="Review your D-NATure investment summary. See your selected package, payment structure, and expected returns from your agricultural investment.">
+    <meta property="og:title" content="D-NATure Subscription Summary - Review Your Farm Subscription">
+    <meta property="og:description" content="Review your D-NATure Subscription summary. See your selected package, payment structure, and expected ROIs from your agricultural Subscription.">
     <meta property="og:image" content="https://res.cloudinary.com/drfzrl9zj/image/upload/v1762153600/WhatsApp_Image_2025-10-17_at_6.46.34_AM_o4o3ek.jpg">
     <meta property="og:url" content="https://d-nature.vercel.app/summary.html">
     <meta property="og:type" content="website">
@@ -15,8 +15,8 @@
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="D-NATure Investment Summary - Review Your Farm Investment">
-    <meta name="twitter:description" content="Review your D-NATure investment summary. See your selected package, payment structure, and expected returns from your agricultural investment.">
+    <meta name="twitter:title" content="D-NATure Subscription Summary - Review Your Farm Subscription">
+    <meta name="twitter:description" content="Review your D-NATure Subscription summary. See your selected package, payment structure, and expected ROIs from your agricultural Subscription.">
     <meta name="twitter:image" content="https://res.cloudinary.com/drfzrl9zj/image/upload/v1762153600/WhatsApp_Image_2025-10-17_at_6.46.34_AM_o4o3ek.jpg">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -197,7 +197,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1><span class="emoji">📋</span>Investment Summary</h1>
+            <h1><span class="emoji">📋</span>Subscription Summary</h1>
         </div>
 
         <div class="summary-pack-display">
@@ -209,33 +209,33 @@
         </div>
 
         <div class="summary-section">
-            <h4>1. Investment Pack Selection</h4>
-            <p>You selected the <strong id="summaryPackNameText"></strong>, which means you are subscribing to the rearing of <strong id="summaryAnimals"></strong> under D-NATure's management system.</p>
+            <h4>1. Subscription Pack Selection</h4>
+            <p>You selected the <strong id="summaryPackNameText"></strong>, which means you are subscribing to the rearing of <strong id="summaryAnimals"></strong> under D-NATure's management bsuiness.</p>
         </div>
 
         <div class="summary-section">
             <h4>2. Subscription Cost Breakdown</h4>
-            <p>Your total subscription amount is <strong id="summaryTotalAmount"></strong>.</p>
-            <p>An initiation fee of 20% (<strong id="summaryInitiationFee"></strong>) will be paid at the next registration step to cover part of the cost of acquiring and caring for your animals.</p>
-            <p>The remaining <strong id="summaryBalanceAmount"></strong> will be distributed evenly over your chosen subscription duration.</p>
+            <p>Your total Subscription amount is <strong id="summaryTotalAmount"></strong>.</p>
+            <p>You will pay your initiation fee (<strong id="summaryInitiationFee"></strong>) at the next registration step to buy you animal and upfront caring</p>
+            <p>The remaining <strong id="summaryBalanceAmount"></strong> will be distributed evenly over your chosen Subscription duration.</p>
         </div>
 
         <div class="summary-section">
             <h4>3. Subscription Duration</h4>
-            <p>You selected a <strong id="summarySubscriptionMonths"></strong>-month subscription duration.</p>
+            <p>You selected a <strong id="summarySubscriptionMonths"></strong>-month Subscription duration.</p>
             <p>This means you will make <strong id="summaryMonthlyPayment"></strong> monthly payments for the next <strong id="summarySubscriptionMonthsText"></strong> months.</p>
         </div>
 
         <div class="summary-section">
             <h4>4. Payout Duration and Structure</h4>
-            <p>Based on your subscription choice, your payout duration will be <strong id="summaryPayoutMonths"></strong> months.</p>
+       
             <p>You will receive all your payout within <strong id="summaryPayoutMonthsText"></strong> months.</p>
         </div>
 
         <div class="summary-section">
             <h4>5. Cycle Summary</h4>
-            <p>Your full investment cycle runs for 12 months in total—a combination of your <strong id="summaryCycleSubscription"></strong>-month payment period and <strong id="summaryCyclePayout"></strong>-month payout period.</p>
-            <p>At the end of this cycle, you will have received a total payout of <strong id="summaryTotalPayout"></strong>, completing your D-NATure investment round.</p>
+            <p>Your full Subscription cycle runs for 12 months in total—a combination of your <strong id="summaryCycleSubscription"></strong>-month payment period and <strong id="summaryCyclePayout"></strong>-month payout period.</p>
+            <p>At the end of this cycle, you will have received a total payout of <strong id="summaryTotalPayout"></strong>, completing your D-NATure Subscription round.</p>
         </div>
 
         <div class="summary-note">
@@ -253,19 +253,19 @@
         window.onload = function() {
             // Check if user has selected a package and duration
             const packageId = localStorage.getItem('selectedPackage');
-            const subscriptionMonths = localStorage.getItem('subscriptionDuration');
+            const SubscriptionMonths = localStorage.getItem('SubscriptionDuration');
             const payoutMonths = localStorage.getItem('payoutDuration');
 
             if (!packageId) {
                 alert('Please select a package first');
                 window.location.href = 'packages.html';
-                return;
+                ROI;
             }
 
-            if (!subscriptionMonths || !payoutMonths) {
-                alert('Please select subscription duration first');
+            if (!SubscriptionMonths || !payoutMonths) {
+                alert('Please select Subscription duration first');
                 window.location.href = 'packages.html';
-                return;
+                ROI;
             }
 
             populateSummary();
@@ -273,7 +273,7 @@
 
         function populateSummary() {
             const packageId = localStorage.getItem('selectedPackage');
-            const subscriptionMonths = localStorage.getItem('subscriptionDuration');
+            const SubscriptionMonths = localStorage.getItem('SubscriptionDuration');
             const payoutMonths = localStorage.getItem('payoutDuration');
 
             // Package data
@@ -293,11 +293,11 @@
             };
 
             const pack = packages[packageId];
-            if (!pack) return;
+            if (!pack) ROI;
 
             const initiationFee = Math.round(pack.amount * 0.2);
             const balanceAmount = pack.amount - initiationFee;
-            const monthlyPayment = Math.round(balanceAmount / subscriptionMonths);
+            const monthlyPayment = Math.round(balanceAmount / SubscriptionMonths);
 
             // Animals description
             let animalsText = "";
@@ -318,12 +318,12 @@
             document.getElementById('summaryTotalAmount').textContent = `₦${pack.amount.toLocaleString()}`;
             document.getElementById('summaryInitiationFee').textContent = `₦${initiationFee.toLocaleString()}`;
             document.getElementById('summaryBalanceAmount').textContent = `₦${balanceAmount.toLocaleString()}`;
-            document.getElementById('summarySubscriptionMonths').textContent = subscriptionMonths;
-            document.getElementById('summarySubscriptionMonthsText').textContent = subscriptionMonths;
+            document.getElementById('summarySubscriptionMonths').textContent = SubscriptionMonths;
+            document.getElementById('summarySubscriptionMonthsText').textContent = SubscriptionMonths;
             document.getElementById('summaryMonthlyPayment').textContent = `₦${monthlyPayment.toLocaleString()}`;
             document.getElementById('summaryPayoutMonths').textContent = payoutMonths;
             document.getElementById('summaryPayoutMonthsText').textContent = payoutMonths;
-            document.getElementById('summaryCycleSubscription').textContent = subscriptionMonths;
+            document.getElementById('summaryCycleSubscription').textContent = SubscriptionMonths;
             document.getElementById('summaryCyclePayout').textContent = payoutMonths;
             document.getElementById('summaryTotalPayout').textContent = `₦${pack.payout.toLocaleString()}`;
         }

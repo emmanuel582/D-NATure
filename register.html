@@ -6,8 +6,8 @@
     <title>Register - D-NATure</title>
     
     <!-- Open Graph Meta Tags for Social Media Preview -->
-    <meta property="og:title" content="Register with D-NATure - Start Your Agricultural Investment">
-    <meta property="og:description" content="Join D-NATure today! Register to start investing in real farm animals and earn guaranteed returns. Transform agriculture with technology and innovation.">
+    <meta property="og:title" content="Register with D-NATure - Start Your Agricultural Subscription">
+    <meta property="og:description" content="Join D-NATure today! Register to start investing in real farm animals and earn guaranteed ROIs. Transform agriculture with technology and innovation.">
     <meta property="og:image" content="https://res.cloudinary.com/drfzrl9zj/image/upload/v1762153600/WhatsApp_Image_2025-10-17_at_6.46.34_AM_o4o3ek.jpg">
     <meta property="og:url" content="https://d-nature.vercel.app/register.html">
     <meta property="og:type" content="website">
@@ -15,8 +15,8 @@
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Register with D-NATure - Start Your Agricultural Investment">
-    <meta name="twitter:description" content="Join D-NATure today! Register to start investing in real farm animals and earn guaranteed returns. Transform agriculture with technology and innovation.">
+    <meta name="twitter:title" content="Register with D-NATure - Start Your Agricultural Subscription">
+    <meta name="twitter:description" content="Join D-NATure today! Register to start investing in real farm animals and earn guaranteed ROIs. Transform agriculture with technology and innovation.">
     <meta name="twitter:image" content="https://res.cloudinary.com/drfzrl9zj/image/upload/v1762153600/WhatsApp_Image_2025-10-17_at_6.46.34_AM_o4o3ek.jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -544,17 +544,15 @@
                 <h2>🌱 Important Payment Information</h2>
             </div>
             <div class="modal-body">
-                <p><strong>For the Packs below</strong></p>
+                <p><strong>For any Pack you choose</strong></p>
                 <p>An initiation fee of 20% of the total Subscription Amount will be required at the next registration step. This fee covers the cost of acquiring and upfront caring for your animal.</p>
-                <p>The remaining 80% will be evenly distributed over the subscription duration you select in the next section (monthly payments).</p>
-                
-                <div class="example-box">
+                <p>The remaining 80% would be distributed evenly over the Subscription duration you select (as monthly Subscription).</p>    
+                <p><strong>Please note that this 20% initiation fee is not an additional charge; it is simply the first portion of your total Subscription amount, required to complete your registration process.</strong></p>
+            <div class="example-box">
                     <h4>Example:</h4>
-                    <p>If you choose the Premium Leap Pack with a total subscription amount of ₦150,000, you will pay ₦30,000 upfront (20%) as your initiation fee during the next registration stage. This fee covers part of the cost of acquiring and caring for the animals in your pack.</p>
-                    <p>The remaining ₦120,000 will then be spread evenly across the number of months you select for your subscription duration in the next section.</p>
+                    <p>If you choose the Premium Leap Pack with a total Subscription amount of ₦150,000, you will pay ₦30,000 upfront (20%) as your initiation fee during the next registration stage. This fee covers part of the cost of acquiring and caring for the animals in your pack.</p>
+                    <p>The remaining ₦120,000 will then be spread evenly across the number of months you select for your Subscription duration in the next section.</p>
                 </div>
-                
-                <p><strong>Please note that this 20% initiation fee is not an additional charge; it is simply the first portion of your total subscription amount, required to complete your registration process.</strong></p>
             </div>
             <div class="modal-footer">
                 <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Cancel</button>
@@ -762,12 +760,12 @@
             const registerBtn = document.querySelector('.register-btn');
             if (registerBtn.disabled) {
                 showErrorMessage('Sorry, you must be at least 16 years old to register. We cannot proceed with your registration at this time.');
-                return;
+                ROI;
             }
             
             // Validate form first
             if (!validateForm()) {
-                return;
+                ROI;
             }
             
             const modal = document.getElementById('infoModal');
@@ -880,10 +878,18 @@
 
         function proceedToRegistration() {
             console.log('Proceeding to next registration step...');
-            
             // Store that user has seen payment info
             localStorage.setItem('paymentInfoSeen', 'true');
-            
+
+            // Send registration data to Google Sheets
+            const registrationData = JSON.parse(localStorage.getItem('registrationData'));
+            fetch('YOUR_GOOGLE_APPS_SCRIPT_WEB_URL', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(registrationData)
+            });
+
             // Redirect to packages page
             window.location.href = 'packages.html';
         }

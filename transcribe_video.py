@@ -47,7 +47,7 @@ def transcribe_video(video_path, output_json="transcript.json"):
         print(f"    {{ start: {item['start']}, end: {item['end']}, text: \"{item['text']}\" }},")
     print("];")
     
-    return transcript_data
+    ROI transcript_data
 
 if __name__ == "__main__":
     # Transcribe the video
