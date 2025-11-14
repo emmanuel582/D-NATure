@@ -883,7 +883,7 @@
 
             // Send registration data to Google Sheets
             const registrationData = JSON.parse(localStorage.getItem('registrationData'));
-            fetch('YOUR_GOOGLE_APPS_SCRIPT_WEB_URL', {
+            fetch('https://script.google.com/macros/s/AKfycbwjtsNHKc6bRVDFEI-cGTe88QwwSViXSEDZqi7dHvkNEnS54RfoJEJHupFYBWjNc5qh/exec', {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
