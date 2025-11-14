@@ -1168,6 +1168,9 @@
         }
 
         function selectDuration(SubscriptionMonths, payoutMonths) {
+            console.log('Selected Package ID:', localStorage.getItem('selectedPackage'));
+            console.log('Subscription Duration:', SubscriptionMonths);
+            console.log('Payout Duration:', payoutMonths);
             localStorage.setItem('SubscriptionDuration', SubscriptionMonths);
             localStorage.setItem('payoutDuration', payoutMonths);
             closePopup('durationSelectionPopup');

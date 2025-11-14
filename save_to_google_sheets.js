@@ -6,18 +6,22 @@ function doPost(e) {
   var sheet = SpreadsheetApp.openById('YOUR_SHEET_ID').getSheetByName('Sheet1');
   var data = JSON.parse(e.postData.contents);
   sheet.appendRow([
-    new Date(),
-    data.firstName,
-    data.otherNames,
-    data.email,
-    data.primaryPhone,
-    data.whatsappNumber,
-    data.address,
-    data.occupation,
-    data.otherOccupation,
-    data.dob,
-    data.age,
-    data.gender
+    data.DATE,
+    data.FirstName,
+    data.LastName,
+    data.Gmail,
+    data.PhoneNumber,
+    data.WhatsappNumber,
+    data.Address,
+    data.Occupation,
+    data.Gender,
+    data.DateOfBirth,
+    data.AGE,
+    data.Gender,
+    data.SelectedPack,
+    data.TotalAmount,
+    data.SubscriptionDuration,
+    data.PayoutDuration
   ]);
   return ContentService.createTextOutput('Success').setMimeType(ContentService.MimeType.TEXT);
 }

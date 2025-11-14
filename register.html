@@ -561,135 +561,90 @@
         </div>
     </div>
 
-    <script>
-        // Show/hide other occupation field
-        document.getElementById('occupation').addEventListener('change', function() {
-            const otherGroup = document.getElementById('otherOccupationGroup');
-            if (this.value === 'other') {
-                otherGroup.style.display = 'block';
-                document.getElementById('otherOccupation').required = true;
-            } else {
-                otherGroup.style.display = 'none';
-                document.getElementById('otherOccupation').required = false;
-            }
-        });
+ <script>
+    // Show/hide other occupation field
+    document.getElementById('occupation').addEventListener('change', function() {
+        const otherGroup = document.getElementById('otherOccupationGroup');
+        if (this.value === 'other') {
+            otherGroup.style.display = 'block';
+            document.getElementById('otherOccupation').required = true;
+        } else {
+            otherGroup.style.display = 'none';
+            document.getElementById('otherOccupation').required = false;
+        }
+    });
 
-        // Initialize custom date picker
-        function initializeDatePicker() {
-            const daySelect = document.getElementById('daySelect');
-            const monthSelect = document.getElementById('monthSelect');
-            const yearSelect = document.getElementById('yearSelect');
-            const hiddenDobInput = document.getElementById('dob');
-            
-            // Populate days (1-31)
-            for (let i = 1; i <= 31; i++) {
-                const option = document.createElement('option');
-                option.value = i;
-                option.textContent = i.toString().padStart(2, '0');
-                daySelect.appendChild(option);
-            }
-            
-            // Populate years (1950-2025)
-            const currentYear = new Date().getFullYear();
-            const maxYear = 2025;
-            for (let i = maxYear; i >= 1950; i--) {
-                const option = document.createElement('option');
-                option.value = i;
-                option.textContent = i;
-                yearSelect.appendChild(option);
-            }
-            
-            // Update days based on selected month and year
-            function updateDays() {
-                const selectedMonth = parseInt(monthSelect.value);
-                const selectedYear = parseInt(yearSelect.value);
-                const selectedDay = daySelect.value;
-                
-                // Clear existing days
-                daySelect.innerHTML = '<option value="">Day</option>';
-                
-                if (selectedMonth && selectedYear) {
-                    const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
-                    
-                    for (let i = 1; i <= daysInMonth; i++) {
-                        const option = document.createElement('option');
-                        option.value = i;
-                        option.textContent = i.toString().padStart(2, '0');
-                        daySelect.appendChild(option);
-                    }
-                    
-                    // Restore selected day if still valid
-                    if (selectedDay && selectedDay <= daysInMonth) {
-                        daySelect.value = selectedDay;
-                    }
-                } else {
-                    // Default days 1-31
-                    for (let i = 1; i <= 31; i++) {
-                        const option = document.createElement('option');
-                        option.value = i;
-                        option.textContent = i.toString().padStart(2, '0');
-                        daySelect.appendChild(option);
-                    }
-                }
-            }
-            
-            // Update hidden input and calculate age
-            function updateDateAndAge() {
-                const day = daySelect.value;
-                const month = monthSelect.value;
-                const year = yearSelect.value;
-                
-                if (day && month && year) {
-                    const dateString = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-                    hiddenDobInput.value = dateString;
-                    
-                    // Calculate age
-                    const dob = new Date(year, month - 1, day);
-                    const today = new Date();
-                    let age = today.getFullYear() - dob.getFullYear();
-                    const monthDiff = today.getMonth() - dob.getMonth();
-                    
-                    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
-                        age--;
-                    }
-                    
-                    document.getElementById('age').value = age;
-                } else {
-                    hiddenDobInput.value = '';
-                    document.getElementById('age').value = '';
-                }
-            }
-            
-            // Add event listeners
-            monthSelect.addEventListener('change', () => {
-                updateDays();
-                updateDateAndAge();
-                validateAge();
-            });
-            
-            yearSelect.addEventListener('change', () => {
-                updateDays();
-                updateDateAndAge();
-                validateAge();
-            });
-            
-            daySelect.addEventListener('change', () => {
-                updateDateAndAge();
-                validateAge();
-            });
+    // Initialize custom date picker
+    function initializeDatePicker() {
+        const daySelect = document.getElementById('daySelect');
+        const monthSelect = document.getElementById('monthSelect');
+        const yearSelect = document.getElementById('yearSelect');
+        const hiddenDobInput = document.getElementById('dob');
+        
+        // Populate days (1-31)
+        for (let i = 1; i <= 31; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = i.toString().padStart(2, '0');
+            daySelect.appendChild(option);
         }
         
-        // Initialize date picker when page loads
-        initializeDatePicker();
-
-        // Age validation for date picker
-        function validateAge() {
-            const daySelect = document.getElementById('daySelect');
-            const monthSelect = document.getElementById('monthSelect');
-            const yearSelect = document.getElementById('yearSelect');
+        // Populate years (1950-2025)
+        const currentYear = new Date().getFullYear();
+        const maxYear = 2025;
+        for (let i = maxYear; i >= 1950; i--) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = i;
+            yearSelect.appendChild(option);
+        }
+        
+        // Update days based on selected month and year
+        function updateDays() {
+            const selectedMonth = parseInt(monthSelect.value);
+            const selectedYear = parseInt(yearSelect.value);
+            const selectedDay = daySelect.value;
             
-            if (daySelect.value && monthSelect.value && yearSelect.value) {
-                const dob = new Date(yearSelect.value, monthSelect.value - 1, daySelect.value);
+            // Clear existing days
+            daySelect.innerHTML = '<option value="">Day</option>';
+            
+            if (selectedMonth && selectedYear) {
+                const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
+                
+                for (let i = 1; i <= daysInMonth; i++) {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = i.toString().padStart(2, '0');
+                    daySelect.appendChild(option);
+                }
+                
+                // Restore selected day if still valid
+                if (selectedDay && selectedDay <= daysInMonth) {
+                    daySelect.value = selectedDay;
+                }
+            } else {
+                // Default days 1-31
+                for (let i = 1; i <= 31; i++) {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = i.toString().padStart(2, '0');
+                    daySelect.appendChild(option);
+                }
+            }
+        }
+        
+        // Update hidden input and calculate age
+        function updateDateAndAge() {
+            const day = daySelect.value;
+            const month = monthSelect.value;
+            const year = yearSelect.value;
+            
+            if (day && month && year) {
+                const dateString = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+                hiddenDobInput.value = dateString;
+                
+                // Calculate age
+                const dob = new Date(year, month - 1, day);
                 const today = new Date();
                 let age = today.getFullYear() - dob.getFullYear();
                 const monthDiff = today.getMonth() - dob.getMonth();
@@ -698,208 +653,328 @@
                     age--;
                 }
                 
-                // Check if age is less than 16
-                if (age < 16) {
-                    [daySelect, monthSelect, yearSelect].forEach(select => {
-                        select.style.borderColor = '#ff4444';
-                        select.style.boxShadow = '0 0 0 3px rgba(255, 68, 68, 0.1)';
-                    });
-                    showErrorMessage('Sorry, you must be at least 16 years old to register.');
-                    
-                    // Disable the register button
-                    const registerBtn = document.querySelector('.register-btn');
-                    registerBtn.disabled = true;
-                    registerBtn.style.opacity = '0.5';
-                    registerBtn.style.cursor = 'not-allowed';
-                    registerBtn.textContent = 'Registration Not Available (Age Requirement)';
-                } else {
-                    [daySelect, monthSelect, yearSelect].forEach(select => {
-                        select.style.borderColor = '#e0e0e0';
-                        select.style.boxShadow = 'none';
-                    });
-                    
-                    // Re-enable the register button
-                    const registerBtn = document.querySelector('.register-btn');
-                    registerBtn.disabled = false;
-                    registerBtn.style.opacity = '1';
-                    registerBtn.style.cursor = 'pointer';
-                    registerBtn.textContent = 'Get Started';
-                }
+                document.getElementById('age').value = age;
+            } else {
+                hiddenDobInput.value = '';
+                document.getElementById('age').value = '';
             }
         }
-
-        // Handle form submission
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Validate form
-            const formData = {
-                firstName: document.getElementById('firstName').value,
-                otherNames: document.getElementById('otherNames').value,
-                email: document.getElementById('email').value,
-                primaryPhone: document.getElementById('primaryPhone').value,
-                whatsappNumber: document.getElementById('whatsappNumber').value,
-                address: document.getElementById('address').value,
-                occupation: document.getElementById('occupation').value,
-                otherOccupation: document.getElementById('otherOccupation').value,
-                dob: document.getElementById('dob').value,
-                age: document.getElementById('age').value,
-                gender: document.getElementById('gender').value
-            };
-            
-            // Store form data for later use
-            localStorage.setItem('registrationData', JSON.stringify(formData));
-            
-            // Show the popup
-            showModal();
+        
+        // Add event listeners
+        monthSelect.addEventListener('change', () => {
+            updateDays();
+            updateDateAndAge();
+            validateAge();
         });
+        
+        yearSelect.addEventListener('change', () => {
+            updateDays();
+            updateDateAndAge();
+            validateAge();
+        });
+        
+        daySelect.addEventListener('change', () => {
+            updateDateAndAge();
+            validateAge();
+        });
+    }
+    
+    // Initialize date picker when page loads
+    initializeDatePicker();
 
-        // Modal functions
-        function showModal() {
-            // Check if button is disabled (age requirement)
-            const registerBtn = document.querySelector('.register-btn');
-            if (registerBtn.disabled) {
-                showErrorMessage('Sorry, you must be at least 16 years old to register. We cannot proceed with your registration at this time.');
-                ROI;
+    // Age validation for date picker
+    function validateAge() {
+        const daySelect = document.getElementById('daySelect');
+        const monthSelect = document.getElementById('monthSelect');
+        const yearSelect = document.getElementById('yearSelect');
+        
+        if (daySelect.value && monthSelect.value && yearSelect.value) {
+            const dob = new Date(yearSelect.value, monthSelect.value - 1, daySelect.value);
+            const today = new Date();
+            let age = today.getFullYear() - dob.getFullYear();
+            const monthDiff = today.getMonth() - dob.getMonth();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+                age--;
             }
             
-            // Validate form first
-            if (!validateForm()) {
-                ROI;
-            }
-            
-            const modal = document.getElementById('infoModal');
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function validateForm() {
-            const form = document.getElementById('registerForm');
-            let isValid = true;
-            
-            // Validate text inputs
-            const requiredTextFields = form.querySelectorAll('input[required]:not([type="hidden"]), select[required]:not(.date-select)');
-            requiredTextFields.forEach(field => {
-                if (!field.value.trim()) {
-                    field.style.borderColor = '#ff4444';
-                    isValid = false;
-                } else {
-                    field.style.borderColor = '#e0e0e0';
-                }
-            });
-            
-            // Validate custom date picker
-            const daySelect = document.getElementById('daySelect');
-            const monthSelect = document.getElementById('monthSelect');
-            const yearSelect = document.getElementById('yearSelect');
-            const hiddenDob = document.getElementById('dob');
-            
-            if (!daySelect.value || !monthSelect.value || !yearSelect.value) {
+            // Check if age is less than 16
+            if (age < 16) {
                 [daySelect, monthSelect, yearSelect].forEach(select => {
-                    if (!select.value) {
-                        select.style.borderColor = '#ff4444';
-                    }
+                    select.style.borderColor = '#ff4444';
+                    select.style.boxShadow = '0 0 0 3px rgba(255, 68, 68, 0.1)';
                 });
-                isValid = false;
+                showErrorMessage('Sorry, you must be at least 16 years old to register.');
+                
+                // Disable the register button
+                const registerBtn = document.querySelector('.register-btn');
+                registerBtn.disabled = true;
+                registerBtn.style.opacity = '0.5';
+                registerBtn.style.cursor = 'not-allowed';
+                registerBtn.textContent = 'Registration Not Available (Age Requirement)';
             } else {
                 [daySelect, monthSelect, yearSelect].forEach(select => {
                     select.style.borderColor = '#e0e0e0';
+                    select.style.boxShadow = 'none';
                 });
                 
-                // Check age validation
-                const dob = new Date(yearSelect.value, monthSelect.value - 1, daySelect.value);
-                const today = new Date();
-                let age = today.getFullYear() - dob.getFullYear();
-                const monthDiff = today.getMonth() - dob.getMonth();
-                
-                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
-                    age--;
-                }
-                
-                if (age < 16) {
-                    [daySelect, monthSelect, yearSelect].forEach(select => {
-                        select.style.borderColor = '#ff4444';
-                        select.style.boxShadow = '0 0 0 3px rgba(255, 68, 68, 0.1)';
-                    });
-                    isValid = false;
-                    showErrorMessage('You must be at least 16 years old to register');
-                }
+                // Re-enable the register button
+                const registerBtn = document.querySelector('.register-btn');
+                registerBtn.disabled = false;
+                registerBtn.style.opacity = '1';
+                registerBtn.style.cursor = 'pointer';
+                registerBtn.textContent = 'Get Started';
             }
-            
-            if (!isValid) {
-                // Show error message if not already shown
-                if (!document.querySelector('.error-message')) {
-                    showErrorMessage('Please fill in all required fields correctly');
-                }
-            }
-            
-            return isValid;
         }
+    }
 
-        function showErrorMessage(message) {
-            // Remove existing error message
-            const existingError = document.querySelector('.error-message');
-            if (existingError) {
-                existingError.remove();
-            }
-            
-            // Create error message
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'error-message';
-            errorDiv.style.cssText = `
-                background: #ff4444;
-                color: white;
-                padding: 15px 20px;
-                border-radius: 10px;
-                margin: 20px 0;
-                text-align: center;
-                font-weight: 500;
-                animation: fadeInUp 0.3s ease-out;
-            `;
-            errorDiv.textContent = message;
-            
-            // Insert before the button
-            const button = document.querySelector('.register-btn');
-            button.parentNode.insertBefore(errorDiv, button);
-            
-            // Remove after 5 seconds
-            setTimeout(() => {
-                if (errorDiv.parentNode) {
-                    errorDiv.remove();
-                }
-            }, 5000);
+    // Handle form submission
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Validate form
+        const formData = {
+            DATE: new Date().toISOString(),
+            FirstName: document.getElementById('firstName').value,
+            LastName: document.getElementById('otherNames').value,
+            Gmail: document.getElementById('email').value,
+            PhoneNumber: document.getElementById('primaryPhone').value,
+            WhatsappNumber: document.getElementById('whatsappNumber').value,
+            Address: document.getElementById('address').value,
+            Occupation: document.getElementById('occupation').value,
+            Gender: document.getElementById('gender').value,
+            DateOfBirth: document.getElementById('dob').value,
+            AGE: document.getElementById('age').value,
+            SelectedPack: localStorage.getItem('selectedPackage'),
+            TotalAmount: localStorage.getItem('selectedPackage') ? getPackAmount(localStorage.getItem('selectedPackage')) : '',
+            SubscriptionDuration: localStorage.getItem('SubscriptionDuration'),
+            PayoutDuration: localStorage.getItem('payoutDuration')
+        };
+        console.log('FormData to save:', formData);
+        
+        // Store form data for later use
+        localStorage.setItem('registrationData', JSON.stringify(formData));
+        
+        // Show the popup
+        showModal();
+    });
+
+    // Package amount mapping
+    function getPackAmount(packId) {
+        const packages = {
+            1: 20000, 2: 40000, 3: 50000, 4: 60000, 5: 70000, 6: 80000, 7: 90000, 8: 100000, 9: 120000, 10: 150000, 11: 200000, 12: 300000
+        };
+        return packages[packId] || '';
+    }
+
+    // Modal functions
+    function showModal() {
+        // Check if button is disabled (age requirement)
+        const registerBtn = document.querySelector('.register-btn');
+        if (registerBtn.disabled) {
+            showErrorMessage('Sorry, you must be at least 16 years old to register. We cannot proceed with your registration at this time.');
+            return;
         }
-
-        function closeModal() {
-            const modal = document.getElementById('infoModal');
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
+        // Validate form first
+        if (!validateForm()) {
+            return;
         }
+        // Ensure registrationData is always set before modal appears
+        const form = document.getElementById('registerForm');
+        const formData = {
+            DATE: new Date().toISOString(),
+            FirstName: document.getElementById('firstName').value,
+            LastName: document.getElementById('otherNames').value,
+            Gmail: document.getElementById('email').value,
+            PhoneNumber: document.getElementById('primaryPhone').value,
+            WhatsappNumber: document.getElementById('whatsappNumber').value,
+            Address: document.getElementById('address').value,
+            Occupation: document.getElementById('occupation').value,
+            Gender: document.getElementById('gender').value,
+            DateOfBirth: document.getElementById('dob').value,
+            AGE: document.getElementById('age').value,
+            SelectedPack: localStorage.getItem('selectedPackage'),
+            TotalAmount: localStorage.getItem('selectedPackage') ? getPackAmount(localStorage.getItem('selectedPackage')) : '',
+            SubscriptionDuration: localStorage.getItem('SubscriptionDuration'),
+            PayoutDuration: localStorage.getItem('payoutDuration')
+        };
+        localStorage.setItem('registrationData', JSON.stringify(formData));
+        const modal = document.getElementById('infoModal');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
 
-        function proceedToRegistration() {
-            console.log('Proceeding to next registration step...');
-            // Store that user has seen payment info
-            localStorage.setItem('paymentInfoSeen', 'true');
-
-            // Send registration data to Google Sheets
-            const registrationData = JSON.parse(localStorage.getItem('registrationData'));
-            fetch('https://script.google.com/macros/s/AKfycbwjtsNHKc6bRVDFEI-cGTe88QwwSViXSEDZqi7dHvkNEnS54RfoJEJHupFYBWjNc5qh/exec', {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(registrationData)
-            });
-
-            // Redirect to packages page
-            window.location.href = 'packages.html';
-        }
-
-        // Close modal when clicking outside
-        document.getElementById('infoModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
+    function validateForm() {
+        const form = document.getElementById('registerForm');
+        let isValid = true;
+        
+        // Validate text inputs
+        const requiredTextFields = form.querySelectorAll('input[required]:not([type="hidden"]), select[required]:not(.date-select)');
+        requiredTextFields.forEach(field => {
+            if (!field.value.trim()) {
+                field.style.borderColor = '#ff4444';
+                isValid = false;
+            } else {
+                field.style.borderColor = '#e0e0e0';
             }
         });
-    </script>
+        
+        // Validate custom date picker
+        const daySelect = document.getElementById('daySelect');
+        const monthSelect = document.getElementById('monthSelect');
+        const yearSelect = document.getElementById('yearSelect');
+        const hiddenDob = document.getElementById('dob');
+        
+        if (!daySelect.value || !monthSelect.value || !yearSelect.value) {
+            [daySelect, monthSelect, yearSelect].forEach(select => {
+                if (!select.value) {
+                    select.style.borderColor = '#ff4444';
+                }
+            });
+            isValid = false;
+        } else {
+            [daySelect, monthSelect, yearSelect].forEach(select => {
+                select.style.borderColor = '#e0e0e0';
+            });
+            
+            // Check age validation
+            const dob = new Date(yearSelect.value, monthSelect.value - 1, daySelect.value);
+            const today = new Date();
+            let age = today.getFullYear() - dob.getFullYear();
+            const monthDiff = today.getMonth() - dob.getMonth();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+                age--;
+            }
+            
+            if (age < 16) {
+                [daySelect, monthSelect, yearSelect].forEach(select => {
+                    select.style.borderColor = '#ff4444';
+                    select.style.boxShadow = '0 0 0 3px rgba(255, 68, 68, 0.1)';
+                });
+                isValid = false;
+                showErrorMessage('You must be at least 16 years old to register');
+            }
+        }
+        
+        if (!isValid) {
+            // Show error message if not already shown
+            if (!document.querySelector('.error-message')) {
+                showErrorMessage('Please fill in all required fields correctly');
+            }
+        }
+        
+        return isValid;
+    }
+
+    function showErrorMessage(message) {
+        // Remove existing error message
+        const existingError = document.querySelector('.error-message');
+        if (existingError) {
+            existingError.remove();
+        }
+        
+        // Create error message
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.style.cssText = `
+            background: #ff4444;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: 500;
+            animation: fadeInUp 0.3s ease-out;
+        `;
+        errorDiv.textContent = message;
+        
+        // Insert before the button
+        const button = document.querySelector('.register-btn');
+        button.parentNode.insertBefore(errorDiv, button);
+        
+        // Remove after 5 seconds
+        setTimeout(() => {
+            if (errorDiv.parentNode) {
+                errorDiv.remove();
+            }
+        }, 5000);
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('infoModal');
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    function proceedToRegistration() {
+        console.log('Proceeding to next registration step...');
+        
+        // Get registration data
+        const registrationData = JSON.parse(localStorage.getItem('registrationData'));
+        if (!registrationData) {
+            console.error('No registrationData found in localStorage!');
+            alert('Registration data missing. Please fill the form and try again.');
+            return;
+        }
+        
+        console.log('Sending registrationData:', registrationData);
+        
+        // Store that user has seen payment info
+        localStorage.setItem('paymentInfoSeen', 'true');
+        
+        // Show loading state
+        const modalBtn = document.querySelector('.modal-btn-primary');
+        const originalText = modalBtn.textContent;
+        modalBtn.textContent = 'Saving...';
+        modalBtn.disabled = true;
+        
+        // Send data with text/plain content type to avoid CORS preflight
+        fetch('https://script.google.com/macros/s/AKfycbzdH6TvzJSkM2SRPpvMzz_jptOD8K0KbBAX5Jl1rIIYAHZBE8fJ1Nn9R43Y5tzbP1Ko/exec', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain;charset=utf-8'
+            },
+            body: JSON.stringify(registrationData)
+        })
+        .then(response => {
+            console.log('Response received:', response);
+            return response.text();
+        })
+        .then(text => {
+            console.log('Response text:', text);
+            try {
+                const data = JSON.parse(text);
+                console.log('Parsed response:', data);
+                
+                if (data.status === 'success') {
+                    console.log('Data saved successfully!');
+                    localStorage.removeItem('registrationData');
+                    window.location.href = 'packages.html';
+                } else {
+                    throw new Error(data.message || 'Unknown error');
+                }
+            } catch (parseError) {
+                console.error('Parse error:', parseError);
+                // Even if parsing fails, redirect (data was likely saved)
+                localStorage.removeItem('registrationData');
+                window.location.href = 'packages.html';
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            // Still redirect even on error
+            localStorage.removeItem('registrationData');
+            window.location.href = 'packages.html';
+        });
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('infoModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeModal();
+        }
+    });
+</script>
 </body>
 </html>
